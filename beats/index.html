@@ -1,0 +1,33 @@
+---
+layout: none
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Beats</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font:16px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:900px;margin:24px}
+    .card{border:1px solid #ddd;border-radius:8px;padding:12px;margin:12px 0}
+    audio{width:100%}
+    .name{font-weight:600;margin:0 0 6px}
+  </style>
+</head>
+<body>
+  <h1>Beats</h1>
+  {% assign tracks = site.static_files | where_exp: "f", "f.path contains '/beats/'" %}
+  {% assign mp3s = tracks | where_exp: "f", "f.extname == '.mp3'" | sort: "path" %}
+  {% if mp3s.size == 0 %}<p>No tracks yet.</p>{% endif %}
+  {% for t in mp3s %}
+    <div class="card">
+      <p class="name">{{ t.name | escape }}</p>
+      <audio controls preload="none">
+        <source src="{{ t.path | uri_escape }}" type="audio/mpeg">
+      </audio>
+      <p><a href="{{ t.path | uri_escape }}" download>Download</a></p>
+    </div>
+  {% endfor %}
+</body>
+</html>
