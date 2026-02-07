@@ -5,29 +5,259 @@ layout: none
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Beats</title>
+  <title>Bern Ban Beats</title>
   <meta name="robots" content="noindex,nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=VT323&display=swap" rel="stylesheet">
   <style>
-    body{font:16px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:900px;margin:24px}
-    .card{border:1px solid #ddd;border-radius:8px;padding:12px;margin:12px 0}
-    audio{width:100%}
-    .name{font-weight:600;margin:0 0 6px}
+    :root{
+      --bg-0:#070915;
+      --bg-1:#130f2c;
+      --pink:#ff4fa5;
+      --cyan:#62f5ff;
+      --violet:#9f74ff;
+      --ink:#eff6ff;
+      --muted:#bfd1ff;
+      --panel:rgba(8,12,36,.78);
+      --line:rgba(98,245,255,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      color:var(--ink);
+      font:18px/1.4 "VT323",monospace;
+      background:
+        radial-gradient(circle at 18% 15%,rgba(255,79,165,.23) 0,rgba(255,79,165,0) 40%),
+        radial-gradient(circle at 82% 15%,rgba(98,245,255,.23) 0,rgba(98,245,255,0) 35%),
+        linear-gradient(180deg,var(--bg-0),var(--bg-1) 55%,#080b1e);
+      min-height:100vh;
+    }
+    .bg{
+      position:fixed;
+      inset:0;
+      background:url("/beats/assets/vapor-grid.svg") center/cover no-repeat;
+      mix-blend-mode:screen;
+      opacity:.6;
+      pointer-events:none;
+    }
+    .scan{
+      position:fixed;
+      inset:0;
+      background:linear-gradient(rgba(255,255,255,.08) 50%,rgba(0,0,0,.05) 50%);
+      background-size:100% 4px;
+      opacity:.12;
+      pointer-events:none;
+    }
+    .wrap{
+      width:min(980px,92vw);
+      margin:40px auto 60px;
+      position:relative;
+      z-index:1;
+    }
+    .hero{
+      border:1px solid var(--line);
+      background:linear-gradient(140deg,rgba(159,116,255,.2),rgba(98,245,255,.08));
+      padding:22px 20px 16px;
+      border-radius:14px;
+      box-shadow:0 0 50px rgba(159,116,255,.25);
+      margin-bottom:22px;
+    }
+    h1{
+      margin:0;
+      font:700 clamp(34px,7vw,72px)/1 "Orbitron",sans-serif;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      text-shadow:0 0 16px rgba(255,79,165,.65);
+    }
+    .sub{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:26px;
+    }
+    .list{
+      display:grid;
+      gap:14px;
+    }
+    .track{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:var(--panel);
+      padding:14px 14px 12px;
+      backdrop-filter:blur(2px);
+      transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+    }
+    .track:hover{
+      transform:translateY(-2px);
+      border-color:rgba(255,79,165,.45);
+      box-shadow:0 10px 26px rgba(0,0,0,.26);
+    }
+    .track-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+    }
+    .name{
+      margin:0;
+      font-family:"Orbitron",sans-serif;
+      letter-spacing:.04em;
+      font-size:17px;
+      text-transform:uppercase;
+      color:#fff;
+    }
+    .date{
+      color:var(--muted);
+      font-size:22px;
+      white-space:nowrap;
+    }
+    .controls{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    button{
+      border:1px solid rgba(255,79,165,.7);
+      background:linear-gradient(140deg,rgba(255,79,165,.22),rgba(159,116,255,.28));
+      color:#fff;
+      border-radius:999px;
+      font:20px/1 "Orbitron",sans-serif;
+      letter-spacing:.08em;
+      padding:8px 16px;
+      cursor:pointer;
+      transition:filter .2s ease;
+    }
+    button:hover{filter:brightness(1.15)}
+    input[type="range"]{
+      width:100%;
+      accent-color:var(--cyan);
+    }
+    .meta{
+      display:flex;
+      justify-content:space-between;
+      margin-top:5px;
+      color:var(--muted);
+      font-size:23px;
+    }
+    a{
+      color:var(--cyan);
+      text-decoration:none;
+    }
+    a:hover{text-decoration:underline}
+    .empty{
+      border:1px dashed rgba(255,79,165,.5);
+      border-radius:12px;
+      padding:22px;
+      color:var(--muted);
+      font-size:26px;
+      background:rgba(255,79,165,.1);
+    }
+    @media (max-width: 720px){
+      .meta{font-size:20px}
+      .name{font-size:15px}
+      .date{font-size:18px}
+      button{font-size:16px;padding:7px 13px}
+      .sub{font-size:21px}
+    }
   </style>
 </head>
 <body>
-  <h1>Beats</h1>
+  <div class="bg"></div>
+  <div class="scan"></div>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Bern Ban Beats</h1>
+      <p class="sub">Latest drops first. Stream or download.</p>
+    </section>
+
   {% assign tracks = site.static_files | where_exp: "f", "f.path contains '/beats/'" %}
-  {% assign mp3s = tracks | where_exp: "f", "f.extname == '.mp3'" | sort: "path" %}
-  {% if mp3s.size == 0 %}<p>No tracks yet.</p>{% endif %}
-  {% for t in mp3s %}
-    <div class="card">
-      <p class="name">{{ t.name | escape }}</p>
-      <audio controls preload="none">
-        <source src="{{ t.path | uri_escape }}" type="audio/mpeg">
-      </audio>
-      <p><a href="{{ t.path | uri_escape }}" download>Download</a></p>
-    </div>
-  {% endfor %}
+  {% assign mp3s = tracks | where_exp: "f", "f.extname == '.mp3'" | sort: "modified_time" | reverse %}
+  {% if mp3s.size == 0 %}
+    <p class="empty">No tracks yet.</p>
+  {% else %}
+    <section class="list">
+    {% for t in mp3s %}
+      <article class="track">
+        <div class="track-top">
+          <h2 class="name">{{ t.basename | escape }}</h2>
+          <span class="date">{{ t.modified_time | date: "%b %-d, %Y" }}</span>
+        </div>
+        <div class="controls">
+          <button type="button" data-action="play">PLAY</button>
+          <input type="range" min="0" max="100" value="0" step="0.1" data-role="seek" aria-label="Seek">
+        </div>
+        <div class="meta">
+          <span data-role="time">0:00 / --:--</span>
+          <a href="{{ t.path | uri_escape }}" download>Download</a>
+        </div>
+        <audio preload="none" src="{{ t.path | uri_escape }}"></audio>
+      </article>
+    {% endfor %}
+    </section>
+  {% endif %}
+  </main>
+
+  <script>
+    (function(){
+      const tracks = Array.from(document.querySelectorAll(".track"));
+      const fmt = (seconds) => {
+        if (!Number.isFinite(seconds)) return "--:--";
+        const s = Math.floor(seconds);
+        const m = Math.floor(s / 60);
+        return m + ":" + String(s % 60).padStart(2, "0");
+      };
+
+      let active = null;
+
+      tracks.forEach((track) => {
+        const audio = track.querySelector("audio");
+        const button = track.querySelector("[data-action='play']");
+        const seek = track.querySelector("[data-role='seek']");
+        const time = track.querySelector("[data-role='time']");
+
+        const sync = () => {
+          const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+          seek.value = pct;
+          time.textContent = fmt(audio.currentTime) + " / " + fmt(audio.duration);
+        };
+
+        button.addEventListener("click", () => {
+          if (active && active !== audio) {
+            active.pause();
+          }
+          if (audio.paused) {
+            audio.play();
+            active = audio;
+          } else {
+            audio.pause();
+          }
+        });
+
+        audio.addEventListener("play", () => {
+          button.textContent = "PAUSE";
+        });
+
+        audio.addEventListener("pause", () => {
+          button.textContent = "PLAY";
+          if (active === audio) active = null;
+        });
+
+        audio.addEventListener("timeupdate", sync);
+        audio.addEventListener("loadedmetadata", sync);
+        audio.addEventListener("ended", () => {
+          seek.value = 0;
+          sync();
+        });
+
+        seek.addEventListener("input", () => {
+          if (!audio.duration) return;
+          audio.currentTime = (Number(seek.value) / 100) * audio.duration;
+          sync();
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
