@@ -3,185 +3,163 @@
 <head>
   <meta charset="utf-8">
   <title>Bern Ban Beats</title>
-  <meta name="robots" content="noindex,nofollow">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@400;700&family=Oxanium:wght@500;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@500;700&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/theme-system.css">
   <style>
-    :root{
-      --bg-0:#070915;
-      --bg-1:#130f2c;
-      --pink:#ff4fa5;
-      --cyan:#62f5ff;
-      --violet:#9f74ff;
-      --ink:#eff6ff;
-      --muted:#bfd1ff;
-      --panel:rgba(8,12,36,.78);
-      --line:rgba(98,245,255,.35);
+    .beats-shell {
+      display: grid;
+      gap: 18px;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      color:var(--ink);
-      font:18px/1.4 "VT323",monospace;
-      background:
-        radial-gradient(circle at 18% 15%,rgba(255,79,165,.23) 0,rgba(255,79,165,0) 40%),
-        radial-gradient(circle at 82% 15%,rgba(98,245,255,.23) 0,rgba(98,245,255,0) 35%),
-        linear-gradient(180deg,var(--bg-0),var(--bg-1) 55%,#080b1e);
-      min-height:100vh;
+
+    .beats-top {
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
-    .bg{
-      position:fixed;
-      inset:0;
-      background:url("/beats/assets/vapor-grid.svg") center/cover no-repeat;
-      mix-blend-mode:screen;
-      opacity:.6;
-      pointer-events:none;
+
+    .beats-title {
+      margin: 0;
+      font: 700 clamp(26px, 6vw, 58px) / 1 var(--display);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-shadow: 0 0 16px var(--glow);
     }
-    .scan{
-      position:fixed;
-      inset:0;
-      background:linear-gradient(rgba(255,255,255,.08) 50%,rgba(0,0,0,.05) 50%);
-      background-size:100% 4px;
-      opacity:.12;
-      pointer-events:none;
+
+    .beats-sub {
+      margin: 6px 0 0;
+      color: var(--muted);
     }
-    .wrap{
-      width:min(980px,92vw);
-      margin:40px auto 60px;
-      position:relative;
-      z-index:1;
+
+    .badge {
+      color: var(--muted);
+      font: 700 11px/1 var(--display);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
-    .hero{
-      border:1px solid var(--line);
-      background:linear-gradient(140deg,rgba(159,116,255,.2),rgba(98,245,255,.08));
-      padding:22px 20px 16px;
-      border-radius:14px;
-      box-shadow:0 0 50px rgba(159,116,255,.25);
-      margin-bottom:22px;
+
+    .list {
+      display: grid;
+      gap: 14px;
     }
-    h1{
-      margin:0;
-      font:700 clamp(34px,7vw,72px)/1 "Orbitron",sans-serif;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      text-shadow:0 0 16px rgba(255,79,165,.65);
+
+    .track {
+      padding: 14px;
     }
-    .sub{
-      margin:8px 0 0;
-      color:var(--muted);
-      font-size:26px;
+
+    .track-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
     }
-    .list{
-      display:grid;
-      gap:14px;
+
+    .track-name {
+      margin: 0;
+      font: 700 24px/1 var(--display);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
-    .track{
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:var(--panel);
-      padding:14px 14px 12px;
-      backdrop-filter:blur(2px);
-      transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+
+    .track-date {
+      color: var(--muted);
+      font-size: 20px;
     }
-    .track:hover{
-      transform:translateY(-2px);
-      border-color:rgba(255,79,165,.45);
-      box-shadow:0 10px 26px rgba(0,0,0,.26);
+
+    .track-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
     }
-    .track-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:8px;
-      margin-bottom:10px;
+
+    .seek {
+      width: 100%;
+      accent-color: var(--accent);
     }
-    .name{
-      margin:0;
-      font-family:"Orbitron",sans-serif;
-      letter-spacing:.04em;
-      font-size:17px;
-      text-transform:uppercase;
-      color:#fff;
+
+    .track-meta {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
     }
-    .date{
-      color:var(--muted);
-      font-size:22px;
-      white-space:nowrap;
+
+    .track-meta a {
+      color: var(--accent-2);
+      text-decoration: none;
     }
-    .controls{
-      display:flex;
-      align-items:center;
-      gap:10px;
+
+    .track-meta a:hover {
+      text-decoration: underline;
     }
-    button{
-      border:1px solid rgba(255,79,165,.7);
-      background:linear-gradient(140deg,rgba(255,79,165,.22),rgba(159,116,255,.28));
-      color:#fff;
-      border-radius:999px;
-      font:20px/1 "Orbitron",sans-serif;
-      letter-spacing:.08em;
-      padding:8px 16px;
-      cursor:pointer;
-      transition:filter .2s ease;
+
+    .empty {
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px dashed var(--line-strong);
+      color: var(--muted);
+      background: var(--panel-soft);
     }
-    button:hover{filter:brightness(1.15)}
-    input[type="range"]{
-      width:100%;
-      accent-color:var(--cyan);
+
+    .back-home {
+      color: var(--accent-2);
+      text-decoration: none;
+      font: 700 13px/1 var(--display);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
-    .meta{
-      display:flex;
-      justify-content:space-between;
-      margin-top:5px;
-      color:var(--muted);
-      font-size:23px;
-    }
-    a{
-      color:var(--cyan);
-      text-decoration:none;
-    }
-    a:hover{text-decoration:underline}
-    .empty{
-      border:1px dashed rgba(255,79,165,.5);
-      border-radius:12px;
-      padding:22px;
-      color:var(--muted);
-      font-size:26px;
-      background:rgba(255,79,165,.1);
-    }
-    @media (max-width: 720px){
-      .meta{font-size:20px}
-      .name{font-size:15px}
-      .date{font-size:18px}
-      button{font-size:16px;padding:7px 13px}
-      .sub{font-size:21px}
+
+    @media (max-width: 760px) {
+      .track-name {
+        font-size: 18px;
+      }
+
+      .track-date {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
-<body>
-  <div class="bg"></div>
-  <div class="scan"></div>
-  <main class="wrap">
-    <section class="hero">
-      <h1>Bern Ban Beats</h1>
-      <p class="sub">Latest drops first. Stream or download.</p>
+<body class="screen-noise">
+  <div class="orb-bg"></div>
+  <div class="grid-floor"></div>
+  <main class="site-wrap beats-shell">
+    <section class="glass beats-top">
+      <div>
+        <p class="badge">Private Workspace</p>
+        <h1 class="beats-title">Bern Ban Beats</h1>
+        <p class="beats-sub">Work-in-progress vault for direct collaborators.</p>
+      </div>
+      <div class="theme-dock">
+        <a class="back-home" data-theme-link href="/">Home</a>
+        <button class="theme-pill" type="button" data-theme-option="neon-dusk" aria-pressed="false">Neon Dusk</button>
+        <button class="theme-pill" type="button" data-theme-option="sunset-tape" aria-pressed="false">Sunset Tape</button>
+        <button class="theme-pill" type="button" data-theme-option="chrome-night" aria-pressed="false">Chrome Night</button>
+      </div>
     </section>
 
     <section id="list" class="list" aria-live="polite"></section>
   </main>
 
+  <script src="/assets/theme-controller.js"></script>
   <script>
-    (function(){
+    (() => {
       const list = document.getElementById("list");
 
       const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        "\"":"&quot;",
-        "'":"&#39;"
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
       }[ch]));
 
       const fmt = (seconds) => {
@@ -193,11 +171,34 @@
 
       let active = null;
 
-      const bindPlayer = (track) => {
-        const audio = track.querySelector("audio");
-        const button = track.querySelector("[data-action='play']");
-        const seek = track.querySelector("[data-role='seek']");
-        const time = track.querySelector("[data-role='time']");
+      const row = (track) => {
+        const safeTitle = escapeHtml(track.title || track.file || "Untitled");
+        const dateLabel = escapeHtml(track.date_label || "Unknown date");
+        const src = encodeURIComponent(track.file || "");
+        return `
+          <article class="glass track">
+            <div class="track-head">
+              <h2 class="track-name">${safeTitle}</h2>
+              <span class="track-date">${dateLabel}</span>
+            </div>
+            <div class="track-controls">
+              <button class="player-btn" type="button" data-action="play">Play</button>
+              <input class="seek" type="range" min="0" max="100" value="0" step="0.1" data-role="seek" aria-label="Seek">
+            </div>
+            <div class="track-meta">
+              <span data-role="time">0:00 / --:--</span>
+              <a href="${src}" download>Download</a>
+            </div>
+            <audio preload="none" src="${src}"></audio>
+          </article>
+        `;
+      };
+
+      const bindPlayer = (trackEl) => {
+        const audio = trackEl.querySelector("audio");
+        const button = trackEl.querySelector("[data-action='play']");
+        const seek = trackEl.querySelector("[data-role='seek']");
+        const time = trackEl.querySelector("[data-role='time']");
 
         const sync = () => {
           const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
@@ -206,9 +207,7 @@
         };
 
         button.addEventListener("click", () => {
-          if (active && active !== audio) {
-            active.pause();
-          }
+          if (active && active !== audio) active.pause();
           if (audio.paused) {
             audio.play();
             active = audio;
@@ -218,50 +217,23 @@
         });
 
         audio.addEventListener("play", () => {
-          button.textContent = "PAUSE";
+          button.textContent = "Pause";
         });
 
         audio.addEventListener("pause", () => {
-          button.textContent = "PLAY";
+          button.textContent = "Play";
           if (active === audio) active = null;
         });
 
         audio.addEventListener("timeupdate", sync);
         audio.addEventListener("loadedmetadata", sync);
-        audio.addEventListener("ended", () => {
-          seek.value = 0;
-          sync();
-        });
+        audio.addEventListener("ended", sync);
 
         seek.addEventListener("input", () => {
           if (!audio.duration) return;
           audio.currentTime = (Number(seek.value) / 100) * audio.duration;
           sync();
         });
-      };
-
-      const row = (track) => {
-        const safeTitle = escapeHtml(track.title || track.file || "Untitled");
-        const dateLabel = escapeHtml(track.date_label || "Unknown date");
-        const encoded = encodeURIComponent(track.file || "");
-        const src = encoded;
-        return `
-          <article class="track">
-            <div class="track-top">
-              <h2 class="name">${safeTitle}</h2>
-              <span class="date">${dateLabel}</span>
-            </div>
-            <div class="controls">
-              <button type="button" data-action="play">PLAY</button>
-              <input type="range" min="0" max="100" value="0" step="0.1" data-role="seek" aria-label="Seek">
-            </div>
-            <div class="meta">
-              <span data-role="time">0:00 / --:--</span>
-              <a href="${src}" download>Download</a>
-            </div>
-            <audio preload="none" src="${src}"></audio>
-          </article>
-        `;
       };
 
       fetch("tracks.json?t=" + Date.now(), { cache: "no-store" })

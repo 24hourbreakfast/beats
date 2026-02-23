@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Bern Ban</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Bern Ban sync music producer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@400;700&family=Oxanium:wght@500;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@500;700&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/theme-system.css">
+  <style>
+    .landing {
+      display: grid;
+      gap: 18px;
+    }
+
+    .mast {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .mast h1 {
+      margin: 0;
+      font: 700 clamp(38px, 9vw, 102px) / 0.95 var(--display);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px var(--glow);
+    }
+
+    .kicker {
+      margin: 0;
+      font: 700 12px/1 var(--display);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .tag {
+      margin: 0;
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 24px;
+    }
+
+    .theme-area {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .theme-title {
+      margin: 0;
+      font: 700 12px/1 var(--display);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+
+    .cards {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel-soft);
+      display: grid;
+      gap: 10px;
+    }
+
+    .card strong {
+      font: 700 14px/1 var(--display);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .swatch {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .swatch span {
+      height: 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: block;
+    }
+
+    .swatch-neon span:nth-child(1) { background: #ff5cb4; }
+    .swatch-neon span:nth-child(2) { background: #67f8ff; }
+    .swatch-neon span:nth-child(3) { background: #6f80ff; }
+
+    .swatch-sunset span:nth-child(1) { background: #ff9164; }
+    .swatch-sunset span:nth-child(2) { background: #ffc891; }
+    .swatch-sunset span:nth-child(3) { background: #c2565f; }
+
+    .swatch-chrome span:nth-child(1) { background: #64d8ff; }
+    .swatch-chrome span:nth-child(2) { background: #bacdff; }
+    .swatch-chrome span:nth-child(3) { background: #0f344d; }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .quiet {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 900px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .tag {
+        font-size: 21px;
+      }
+    }
+  </style>
+</head>
+<body class="screen-noise">
+  <div class="orb-bg"></div>
+  <div class="grid-floor"></div>
+  <main class="site-wrap landing">
+    <section class="glass mast">
+      <p class="kicker">Sync Music Producer</p>
+      <h1>Bern Ban</h1>
+      <p class="tag">Tracks built for picture, collaboration, and late-night bounce experiments.</p>
+      <div class="links">
+        <a class="link-btn" href="mailto:nathan@nathanbernier.com">Contact</a>
+        <a class="link-btn" href="https://x.com/" rel="noopener noreferrer">Social</a>
+      </div>
+      <p class="quiet">Private work-in-progress vault is unlisted and shared directly.</p>
+    </section>
+
+    <section class="glass theme-area">
+      <p class="theme-title">Pick A Visual Direction</p>
+      <div class="theme-dock">
+        <button class="theme-pill" type="button" data-theme-option="neon-dusk" aria-pressed="false">Neon Dusk</button>
+        <button class="theme-pill" type="button" data-theme-option="sunset-tape" aria-pressed="false">Sunset Tape</button>
+        <button class="theme-pill" type="button" data-theme-option="chrome-night" aria-pressed="false">Chrome Night</button>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <strong>Neon Dusk</strong>
+          <div class="swatch swatch-neon"><span></span><span></span><span></span></div>
+          <p>High contrast vapor palette. Strong glow and arcade edge.</p>
+        </article>
+        <article class="card">
+          <strong>Sunset Tape</strong>
+          <div class="swatch swatch-sunset"><span></span><span></span><span></span></div>
+          <p>Warm analog sunset colors. Dreamier and more cinematic.</p>
+        </article>
+        <article class="card">
+          <strong>Chrome Night</strong>
+          <div class="swatch swatch-chrome"><span></span><span></span><span></span></div>
+          <p>Cool metallic blues. Cleaner modern techno feel.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/theme-controller.js"></script>
+</body>
+</html>

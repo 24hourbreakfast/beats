@@ -5,3 +5,13 @@
   from = "/beats"
   to = "/beats/"
   status = 301
+
+[[headers]]
+  for = "/beats/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+
+[[headers]]
+  for = "/beats"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
