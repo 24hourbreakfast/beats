@@ -18,6 +18,7 @@
   --mono: "VT323", monospace;
   --button-bg: linear-gradient(140deg, rgba(255, 92, 180, 0.2), rgba(97, 170, 255, 0.28));
   --orb: radial-gradient(circle at 50% 40%, rgba(255, 150, 199, 0.42), rgba(255, 150, 199, 0) 60%);
+  --scene-opacity: 0;
 }
 
 :root[data-theme="neon-dusk"] {
@@ -40,6 +41,7 @@
   --mono: "VT323", monospace;
   --button-bg: linear-gradient(135deg, rgba(255, 91, 175, 0.25), rgba(99, 246, 255, 0.22));
   --orb: radial-gradient(circle at 50% 40%, rgba(255, 128, 200, 0.45), rgba(255, 128, 200, 0) 62%);
+  --scene-opacity: 0.62;
 }
 
 :root[data-theme="sunset-tape"] {
@@ -62,6 +64,7 @@
   --mono: "Space Grotesk", sans-serif;
   --button-bg: linear-gradient(130deg, rgba(255, 137, 103, 0.26), rgba(255, 209, 142, 0.24));
   --orb: radial-gradient(circle at 50% 40%, rgba(255, 147, 97, 0.45), rgba(255, 147, 97, 0) 62%);
+  --scene-opacity: 0;
 }
 
 :root[data-theme="chrome-night"] {
@@ -84,6 +87,7 @@
   --mono: "Share Tech Mono", monospace;
   --button-bg: linear-gradient(140deg, rgba(42, 139, 180, 0.25), rgba(193, 214, 255, 0.18));
   --orb: radial-gradient(circle at 50% 40%, rgba(81, 148, 189, 0.35), rgba(81, 148, 189, 0) 62%);
+  --scene-opacity: 0;
 }
 
 * {
@@ -175,6 +179,16 @@ button.player-btn {
   transform: translate(-50%, -50%);
   background: var(--orb);
   filter: blur(0.2px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scene-art {
+  position: fixed;
+  inset: 0;
+  background: url("/assets/neon-dolphin-crystal.svg") center top / cover no-repeat;
+  opacity: var(--scene-opacity);
+  mix-blend-mode: screen;
   pointer-events: none;
   z-index: 0;
 }

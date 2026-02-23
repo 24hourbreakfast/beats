@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="c1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a8f7ff"/>
+      <stop offset="50%" stop-color="#ff77c8"/>
+      <stop offset="100%" stop-color="#7f93ff"/>
+    </linearGradient>
+    <linearGradient id="c2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffd8ff"/>
+      <stop offset="100%" stop-color="#79deff"/>
+    </linearGradient>
+    <filter id="g" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.8" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g opacity=".55" filter="url(#g)">
+    <circle cx="150" cy="160" r="2" fill="#fff"/>
+    <circle cx="240" cy="130" r="2" fill="#fff"/>
+    <circle cx="360" cy="210" r="3" fill="#ffc6f6"/>
+    <circle cx="470" cy="120" r="2" fill="#84f3ff"/>
+    <circle cx="580" cy="250" r="2" fill="#fff"/>
+    <circle cx="720" cy="170" r="3" fill="#fff"/>
+    <circle cx="840" cy="260" r="2" fill="#ffc6f6"/>
+    <circle cx="940" cy="160" r="2" fill="#84f3ff"/>
+    <circle cx="1060" cy="210" r="2" fill="#fff"/>
+    <circle cx="1180" cy="130" r="3" fill="#ffc6f6"/>
+    <circle cx="1300" cy="240" r="2" fill="#fff"/>
+    <circle cx="1410" cy="170" r="2" fill="#84f3ff"/>
+    <circle cx="1540" cy="210" r="3" fill="#fff"/>
+    <circle cx="1660" cy="150" r="2" fill="#ffc6f6"/>
+  </g>
+
+  <g fill="url(#c1)" opacity=".62" filter="url(#g)">
+    <polygon points="900,190 980,540 835,540"/>
+    <polygon points="1010,270 1070,520 955,520"/>
+    <polygon points="780,310 845,540 725,540"/>
+    <polygon points="1120,340 1165,520 1075,520"/>
+    <polygon points="690,360 735,520 645,520"/>
+    <polygon points="940,360 1000,610 885,610"/>
+    <polygon points="830,390 885,610 780,610"/>
+  </g>
+
+  <g fill="none" stroke="url(#c2)" stroke-width="5" opacity=".65" filter="url(#g)">
+    <path d="M260 360 C 340 280, 500 280, 620 360 C 525 370, 445 422, 390 500 C 330 465, 285 420, 260 360 Z"/>
+    <path d="M380 445 C 352 440, 320 450, 290 480"/>
+    <path d="M1030 410 C 1085 360, 1190 360, 1260 410 C 1208 420, 1162 455, 1130 510 C 1085 485, 1052 455, 1030 410 Z"/>
+    <path d="M1115 470 C 1093 468, 1068 476, 1048 495"/>
+  </g>
+
+  <g opacity=".48" fill="#ff8bd2" filter="url(#g)">
+    <rect x="245" y="585" width="10" height="10"/>
+    <rect x="300" y="620" width="9" height="9"/>
+    <rect x="355" y="600" width="11" height="11"/>
+    <rect x="420" y="640" width="8" height="8"/>
+    <rect x="480" y="612" width="12" height="12"/>
+    <rect x="1230" y="615" width="10" height="10"/>
+    <rect x="1285" y="590" width="9" height="9"/>
+    <rect x="1348" y="632" width="12" height="12"/>
+    <rect x="1410" y="606" width="8" height="8"/>
+    <rect x="1470" y="650" width="9" height="9"/>
+  </g>
+</svg>
