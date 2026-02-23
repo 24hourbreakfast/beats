@@ -8,6 +8,7 @@ import json
 import re
 import shutil
 import subprocess
+import sys
 import time
 from datetime import datetime
 from pathlib import Path
@@ -68,6 +69,8 @@ def upload_file(
     archive_dir: Path | None,
 ) -> None:
     wait_for_stable_file(source)
+    sh(["git", "pull", "--rebase", "origin", "main"], cwd=repo_root)
+
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     safe_name = sanitize_name(source.stem)
     dest_name = f"{stamp}__{safe_name}.mp3"
@@ -75,9 +78,9 @@ def upload_file(
     shutil.copy2(source, dest_path)
     print(f"[copy] {source} -> {dest_path}")
 
-    sh(["git", "add", str(dest_path)], cwd=repo_root)
+    sh([sys.executable, str(repo_root / "tools" / "generate_tracks_manifest.py")], cwd=repo_root)
+    sh(["git", "add", str(dest_path), "beats/tracks.json"], cwd=repo_root)
     sh(["git", "commit", "-m", f"Add beat: {dest_name}"], cwd=repo_root)
-    sh(["git", "pull", "--rebase", "origin", "main"], cwd=repo_root)
     sh(["git", "push", "origin", "main"], cwd=repo_root)
     print(f"[push] uploaded {dest_name}")
 
