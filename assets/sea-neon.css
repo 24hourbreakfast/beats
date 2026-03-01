@@ -1,0 +1,312 @@
+:root {
+  --bg-deep: #06071c;
+  --bg-mid: #141a4a;
+  --bg-high: #3a1c7d;
+  --ink: #eef7ff;
+  --muted: #b9c8ea;
+  --pink: #ff6ad7;
+  --cyan: #67eeff;
+  --violet: #8f8dff;
+  --glass: rgba(8, 11, 36, 0.62);
+  --line: rgba(103, 238, 255, 0.38);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  color: var(--ink);
+  font: 16px/1.5 "Space Grotesk", sans-serif;
+  background:
+    radial-gradient(circle at 10% 15%, rgba(255, 106, 215, 0.26), transparent 38%),
+    radial-gradient(circle at 88% 18%, rgba(103, 238, 255, 0.24), transparent 34%),
+    linear-gradient(180deg, var(--bg-high), var(--bg-mid) 42%, var(--bg-deep));
+  overflow-x: hidden;
+}
+
+.site-bg {
+  position: fixed;
+  inset: 0;
+  background: url("/assets/neon-dolphin-crystal.svg") center center / cover no-repeat;
+  opacity: 0.9;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glitter {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 16% 14%, rgba(255, 255, 255, 0.92) 0 2px, transparent 3px),
+    radial-gradient(circle at 27% 24%, rgba(103, 238, 255, 0.82) 0 2px, transparent 3px),
+    radial-gradient(circle at 45% 12%, rgba(255, 197, 245, 0.86) 0 2px, transparent 3px),
+    radial-gradient(circle at 62% 18%, rgba(255, 255, 255, 0.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 75% 11%, rgba(103, 238, 255, 0.84) 0 2px, transparent 3px),
+    radial-gradient(circle at 89% 27%, rgba(255, 186, 236, 0.82) 0 2px, transparent 3px);
+  opacity: 0.62;
+  animation: shimmer 3.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 94vw);
+  margin: 24px auto 70px;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(7, 10, 31, 0.68);
+  backdrop-filter: blur(8px);
+}
+
+.menu-logo {
+  margin: 0;
+  font: 400 22px/1 "Rajdhani", sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.menu-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.menu a {
+  text-decoration: none;
+  color: var(--ink);
+  font: 600 13px/1 "Rajdhani", sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 106, 215, 0.42);
+  background: rgba(255, 106, 215, 0.12);
+  padding: 9px 14px;
+  border-radius: 999px;
+}
+
+.hero {
+  margin-top: 18px;
+  padding: clamp(26px, 4vw, 42px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: linear-gradient(155deg, rgba(9, 12, 42, 0.72), rgba(4, 6, 25, 0.72));
+  box-shadow: 0 0 80px rgba(255, 106, 215, 0.18), 0 0 56px rgba(103, 238, 255, 0.16);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font: 700 13px/1 "Rajdhani", sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hero h1 {
+  margin: 0;
+  font: 400 clamp(52px, 12vw, 140px)/0.9 "Monoton", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f4fbff;
+  text-shadow: 0 0 18px rgba(255, 110, 220, 0.55), 0 0 28px rgba(103, 238, 255, 0.32);
+}
+
+.hero p {
+  margin: 20px 0 0;
+  max-width: 58ch;
+  font-size: clamp(21px, 2.8vw, 30px);
+  color: #e7f2ff;
+}
+
+.hero-actions {
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hero-actions a {
+  text-decoration: none;
+  color: var(--ink);
+  font: 700 14px/1 "Rajdhani", sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 11px 16px;
+  border: 1px solid rgba(103, 238, 255, 0.5);
+  background: linear-gradient(135deg, rgba(255, 106, 215, 0.2), rgba(103, 238, 255, 0.2));
+}
+
+.panel {
+  margin-top: 18px;
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--glass);
+  backdrop-filter: blur(7px);
+}
+
+.panel h2 {
+  margin: 0 0 10px;
+  font: 700 clamp(26px, 4vw, 46px)/1 "Rajdhani", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.panel p {
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+
+.logo-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.logo-slot {
+  min-height: 92px;
+  border: 1px dashed rgba(255, 106, 215, 0.46);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  text-align: center;
+  font: 600 14px/1.2 "Rajdhani", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(255, 106, 215, 0.08);
+}
+
+.beats-title {
+  margin: 0;
+  font: 400 clamp(38px, 8vw, 96px)/0.95 "Monoton", sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.beats-sub {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: clamp(18px, 2vw, 24px);
+}
+
+.track-list {
+  margin-top: 16px;
+  display: grid;
+  gap: 14px;
+}
+
+.track-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(8, 11, 36, 0.7);
+  padding: 14px;
+  backdrop-filter: blur(5px);
+}
+
+.track-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.track-head h3 {
+  margin: 0;
+  font: 700 24px/1 "Rajdhani", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.track-date {
+  color: var(--muted);
+}
+
+.track-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.play {
+  border: 1px solid rgba(255, 106, 215, 0.62);
+  border-radius: 999px;
+  background: rgba(255, 106, 215, 0.18);
+  color: var(--ink);
+  font: 700 13px/1 "Rajdhani", sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.seek {
+  width: 100%;
+  accent-color: var(--pink);
+}
+
+.track-meta {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+}
+
+.track-meta a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+.track-meta a:hover {
+  text-decoration: underline;
+}
+
+.empty {
+  border: 1px dashed rgba(255, 106, 215, 0.48);
+  border-radius: 14px;
+  padding: 16px;
+  color: var(--muted);
+  background: rgba(255, 106, 215, 0.08);
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.5; }
+  50% { opacity: 0.82; }
+  100% { opacity: 0.5; }
+}
+
+@media (max-width: 780px) {
+  .menu {
+    border-radius: 22px;
+    align-items: flex-start;
+  }
+
+  .menu-logo {
+    font-size: 18px;
+  }
+
+  .menu a {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
