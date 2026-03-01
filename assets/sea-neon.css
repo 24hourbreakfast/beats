@@ -26,7 +26,7 @@ body {
 
 body {
   color: var(--ink);
-  font: 16px/1.55 "Space Grotesk", sans-serif;
+  font: 28px/1.32 "VT323", monospace;
   background:
     radial-gradient(circle at 18% 18%, rgba(255, 94, 207, 0.34), transparent 34%),
     radial-gradient(circle at 84% 22%, rgba(102, 239, 255, 0.3), transparent 32%),
@@ -94,7 +94,7 @@ body::before {
 
 .menu-logo {
   margin: 0;
-  font: 400 21px/1 "Audiowide", sans-serif;
+  font: 700 21px/1 "Orbitron", sans-serif;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
@@ -109,7 +109,7 @@ body::before {
 .menu a {
   text-decoration: none;
   color: var(--ink);
-  font: 700 12px/1 "Chakra Petch", sans-serif;
+  font: 700 12px/1 "Orbitron", sans-serif;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   border: 1px solid rgba(255, 94, 207, 0.6);
@@ -130,7 +130,7 @@ body::before {
 
 .eyebrow {
   margin: 0 0 10px;
-  font: 700 12px/1 "Chakra Petch", sans-serif;
+  font: 700 12px/1 "Orbitron", sans-serif;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--muted);
@@ -138,7 +138,7 @@ body::before {
 
 .hero h1 {
   margin: 0;
-  font: 400 clamp(52px, 12vw, 152px)/0.9 "Monoton", sans-serif;
+  font: 900 clamp(52px, 12vw, 132px)/0.92 "Orbitron", sans-serif;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #fbfdff;
@@ -169,7 +169,7 @@ body::before {
 .hero-actions a {
   text-decoration: none;
   color: var(--ink);
-  font: 700 13px/1 "Chakra Petch", sans-serif;
+  font: 700 13px/1 "Orbitron", sans-serif;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   border-radius: 999px;
@@ -190,7 +190,7 @@ body::before {
 
 .panel h2 {
   margin: 0 0 8px;
-  font: 700 clamp(27px, 4vw, 48px)/1 "Audiowide", sans-serif;
+  font: 700 clamp(27px, 4vw, 48px)/1 "Orbitron", sans-serif;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #f0f7ff;
@@ -216,7 +216,7 @@ body::before {
 
 .beats-title {
   margin: 0;
-  font: 400 clamp(40px, 8vw, 98px)/0.95 "Monoton", sans-serif;
+  font: 900 clamp(40px, 8vw, 92px)/0.95 "Orbitron", sans-serif;
   letter-spacing: 0.05em;
   text-shadow: 0 0 20px rgba(255, 94, 207, 0.45), 0 0 30px rgba(102, 239, 255, 0.35);
 }
@@ -224,7 +224,7 @@ body::before {
 .beats-sub {
   margin: 10px 0 0;
   color: var(--muted);
-  font: 700 clamp(16px, 2vw, 22px)/1.2 "Chakra Petch", sans-serif;
+  font: 700 clamp(16px, 2vw, 22px)/1.2 "Orbitron", sans-serif;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -254,14 +254,14 @@ body::before {
 
 .track-head h3 {
   margin: 0;
-  font: 700 25px/1 "Audiowide", sans-serif;
+  font: 700 23px/1 "Orbitron", sans-serif;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .track-date {
   color: var(--muted);
-  font: 700 13px/1 "Chakra Petch", sans-serif;
+  font: 700 12px/1 "Orbitron", sans-serif;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -277,7 +277,7 @@ body::before {
   border-radius: 999px;
   background: rgba(255, 94, 207, 0.2);
   color: var(--ink);
-  font: 700 12px/1 "Chakra Petch", sans-serif;
+  font: 700 12px/1 "Orbitron", sans-serif;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   padding: 10px 14px;
@@ -320,6 +320,10 @@ body::before {
 }
 
 @media (max-width: 780px) {
+  body {
+    font-size: 24px;
+  }
+
   .menu {
     border-radius: 22px;
     align-items: flex-start;
