@@ -1,67 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1000" preserveAspectRatio="xMidYMid slice">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
   <defs>
-    <linearGradient id="c1" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#a8f7ff"/>
-      <stop offset="50%" stop-color="#ff77c8"/>
-      <stop offset="100%" stop-color="#7f93ff"/>
+    <linearGradient id="skyGlow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2d0f75" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0a0d2a" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="c2" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffd8ff"/>
-      <stop offset="100%" stop-color="#79deff"/>
+    <linearGradient id="crystalA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9cf6ff"/>
+      <stop offset="45%" stop-color="#ffa0db"/>
+      <stop offset="100%" stop-color="#8d8fff"/>
     </linearGradient>
-    <filter id="g" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="2.8" result="b"/>
+    <linearGradient id="crystalB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe8ff"/>
+      <stop offset="100%" stop-color="#6fe0ff"/>
+    </linearGradient>
+    <linearGradient id="dolphin" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#74eeff"/>
+      <stop offset="55%" stop-color="#8da5ff"/>
+      <stop offset="100%" stop-color="#ffd7ff"/>
+    </linearGradient>
+    <linearGradient id="mountain" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6a3ad2"/>
+      <stop offset="100%" stop-color="#2c1d73"/>
+    </linearGradient>
+    <filter id="glow" x="-45%" y="-45%" width="190%" height="190%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
       <feMerge>
-        <feMergeNode in="b"/>
+        <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
   </defs>
 
-  <g opacity=".55" filter="url(#g)">
-    <circle cx="150" cy="160" r="2" fill="#fff"/>
-    <circle cx="240" cy="130" r="2" fill="#fff"/>
-    <circle cx="360" cy="210" r="3" fill="#ffc6f6"/>
-    <circle cx="470" cy="120" r="2" fill="#84f3ff"/>
-    <circle cx="580" cy="250" r="2" fill="#fff"/>
-    <circle cx="720" cy="170" r="3" fill="#fff"/>
-    <circle cx="840" cy="260" r="2" fill="#ffc6f6"/>
-    <circle cx="940" cy="160" r="2" fill="#84f3ff"/>
-    <circle cx="1060" cy="210" r="2" fill="#fff"/>
-    <circle cx="1180" cy="130" r="3" fill="#ffc6f6"/>
-    <circle cx="1300" cy="240" r="2" fill="#fff"/>
-    <circle cx="1410" cy="170" r="2" fill="#84f3ff"/>
-    <circle cx="1540" cy="210" r="3" fill="#fff"/>
-    <circle cx="1660" cy="150" r="2" fill="#ffc6f6"/>
+  <rect width="1920" height="1080" fill="url(#skyGlow)"/>
+
+  <g opacity="0.65" filter="url(#glow)">
+    <circle cx="130" cy="95" r="2.4" fill="#fff"/>
+    <circle cx="255" cy="120" r="2.1" fill="#ffd8ff"/>
+    <circle cx="390" cy="80" r="2.8" fill="#8df0ff"/>
+    <circle cx="530" cy="115" r="2.2" fill="#fff"/>
+    <circle cx="690" cy="76" r="2.5" fill="#ffd8ff"/>
+    <circle cx="835" cy="130" r="2.1" fill="#8df0ff"/>
+    <circle cx="960" cy="88" r="2.5" fill="#fff"/>
+    <circle cx="1110" cy="120" r="2.2" fill="#ffd8ff"/>
+    <circle cx="1260" cy="72" r="2.9" fill="#8df0ff"/>
+    <circle cx="1405" cy="110" r="2.3" fill="#fff"/>
+    <circle cx="1560" cy="90" r="2.4" fill="#ffd8ff"/>
+    <circle cx="1710" cy="118" r="2.1" fill="#8df0ff"/>
+    <circle cx="1840" cy="78" r="2.6" fill="#fff"/>
   </g>
 
-  <g fill="url(#c1)" opacity=".62" filter="url(#g)">
-    <polygon points="900,190 980,540 835,540"/>
-    <polygon points="1010,270 1070,520 955,520"/>
-    <polygon points="780,310 845,540 725,540"/>
-    <polygon points="1120,340 1165,520 1075,520"/>
-    <polygon points="690,360 735,520 645,520"/>
-    <polygon points="940,360 1000,610 885,610"/>
-    <polygon points="830,390 885,610 780,610"/>
+  <g opacity="0.6">
+    <path d="M0 620 L190 490 L390 620 Z" fill="url(#mountain)"/>
+    <path d="M290 620 L520 430 L790 620 Z" fill="url(#mountain)"/>
+    <path d="M1130 620 L1370 460 L1640 620 Z" fill="url(#mountain)"/>
+    <path d="M1510 620 L1730 500 L1920 620 Z" fill="url(#mountain)"/>
   </g>
 
-  <g fill="none" stroke="url(#c2)" stroke-width="5" opacity=".65" filter="url(#g)">
-    <path d="M260 360 C 340 280, 500 280, 620 360 C 525 370, 445 422, 390 500 C 330 465, 285 420, 260 360 Z"/>
-    <path d="M380 445 C 352 440, 320 450, 290 480"/>
-    <path d="M1030 410 C 1085 360, 1190 360, 1260 410 C 1208 420, 1162 455, 1130 510 C 1085 485, 1052 455, 1030 410 Z"/>
-    <path d="M1115 470 C 1093 468, 1068 476, 1048 495"/>
+  <g filter="url(#glow)" opacity="0.92">
+    <polygon points="960,170 1090,720 850,720" fill="url(#crystalA)"/>
+    <polygon points="1120,270 1235,705 1015,705" fill="url(#crystalB)"/>
+    <polygon points="780,310 885,710 690,710" fill="url(#crystalA)"/>
+    <polygon points="1280,350 1360,705 1200,705" fill="url(#crystalA)"/>
+    <polygon points="635,360 725,705 555,705" fill="url(#crystalB)"/>
+    <polygon points="1030,390 1120,860 945,860" fill="url(#crystalA)"/>
+    <polygon points="860,420 935,860 780,860" fill="url(#crystalB)"/>
   </g>
 
-  <g opacity=".48" fill="#ff8bd2" filter="url(#g)">
-    <rect x="245" y="585" width="10" height="10"/>
-    <rect x="300" y="620" width="9" height="9"/>
-    <rect x="355" y="600" width="11" height="11"/>
-    <rect x="420" y="640" width="8" height="8"/>
-    <rect x="480" y="612" width="12" height="12"/>
-    <rect x="1230" y="615" width="10" height="10"/>
-    <rect x="1285" y="590" width="9" height="9"/>
-    <rect x="1348" y="632" width="12" height="12"/>
-    <rect x="1410" y="606" width="8" height="8"/>
-    <rect x="1470" y="650" width="9" height="9"/>
+  <g fill="none" stroke="url(#dolphin)" stroke-width="9" opacity="0.9" filter="url(#glow)">
+    <path d="M120 410 C 260 275, 515 275, 700 410 C 550 430, 425 520, 336 642 C 235 586, 170 517, 120 410 Z"/>
+    <path d="M330 560 C 286 558, 232 575, 192 620"/>
+    <path d="M920 470 C 1010 380, 1178 380, 1290 470 C 1198 488, 1118 552, 1062 653 C 991 612, 947 559, 920 470 Z"/>
+    <path d="M1042 575 C 1012 576, 979 588, 955 612"/>
+    <path d="M1385 365 C 1450 320, 1560 320, 1632 365 C 1573 377, 1520 414, 1483 474 C 1434 446, 1404 412, 1385 365 Z"/>
+  </g>
+
+  <g opacity="0.58" fill="#ff92d7" filter="url(#glow)">
+    <rect x="260" y="715" width="14" height="14"/>
+    <rect x="332" y="770" width="12" height="12"/>
+    <rect x="415" y="728" width="15" height="15"/>
+    <rect x="492" y="790" width="11" height="11"/>
+    <rect x="570" y="744" width="13" height="13"/>
+    <rect x="1240" y="740" width="13" height="13"/>
+    <rect x="1315" y="700" width="12" height="12"/>
+    <rect x="1395" y="778" width="14" height="14"/>
+    <rect x="1472" y="735" width="12" height="12"/>
+    <rect x="1554" y="812" width="11" height="11"/>
+  </g>
+
+  <g opacity="0.5" filter="url(#glow)">
+    <ellipse cx="960" cy="865" rx="420" ry="95" fill="#7cf0ff"/>
+    <ellipse cx="960" cy="888" rx="515" ry="135" fill="#ff85d2"/>
   </g>
 </svg>
