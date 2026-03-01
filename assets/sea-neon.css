@@ -135,6 +135,10 @@ body {
   color: #e7f2ff;
 }
 
+.hero-tagline:empty {
+  display: none;
+}
+
 .hero-actions {
   margin-top: 18px;
   display: flex;
