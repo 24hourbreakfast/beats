@@ -22,6 +22,10 @@
       <stop offset="0%" stop-color="#6a3ad2"/>
       <stop offset="100%" stop-color="#2c1d73"/>
     </linearGradient>
+    <linearGradient id="jelly" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff9ef2"/>
+      <stop offset="100%" stop-color="#8deeff"/>
+    </linearGradient>
     <filter id="glow" x="-45%" y="-45%" width="190%" height="190%">
       <feGaussianBlur stdDeviation="4" result="blur"/>
       <feMerge>
@@ -87,8 +91,32 @@
     <rect x="1554" y="812" width="11" height="11"/>
   </g>
 
+  <g fill="none" stroke="url(#jelly)" stroke-linecap="round" filter="url(#glow)" opacity="0.74">
+    <path d="M1460 210 C 1495 174, 1541 174, 1570 210 C 1560 252, 1470 252, 1460 210 Z" stroke-width="5"/>
+    <path d="M1480 248 C 1482 290, 1470 336, 1457 372" stroke-width="3.5"/>
+    <path d="M1504 248 C 1508 300, 1498 350, 1489 392" stroke-width="3"/>
+    <path d="M1530 246 C 1540 298, 1538 348, 1533 386" stroke-width="2.8"/>
+    <path d="M1598 155 C 1628 125, 1668 126, 1692 155 C 1684 189, 1606 190, 1598 155 Z" stroke-width="4.5"/>
+    <path d="M1615 189 C 1613 222, 1604 255, 1592 287" stroke-width="2.8"/>
+    <path d="M1638 188 C 1636 230, 1630 266, 1622 300" stroke-width="2.6"/>
+    <path d="M1662 186 C 1666 230, 1665 264, 1661 302" stroke-width="2.4"/>
+    <path d="M1748 248 C 1772 223, 1804 224, 1824 248 C 1819 276, 1754 276, 1748 248 Z" stroke-width="4"/>
+    <path d="M1764 278 C 1764 304, 1756 333, 1747 360" stroke-width="2.4"/>
+    <path d="M1784 278 C 1788 311, 1786 338, 1782 364" stroke-width="2.2"/>
+    <path d="M1803 276 C 1810 305, 1813 332, 1812 357" stroke-width="2.1"/>
+  </g>
+
   <g opacity="0.5" filter="url(#glow)">
     <ellipse cx="960" cy="865" rx="420" ry="95" fill="#7cf0ff"/>
     <ellipse cx="960" cy="888" rx="515" ry="135" fill="#ff85d2"/>
+  </g>
+
+  <g opacity="0.62" fill="#ffcf73" filter="url(#glow)">
+    <circle cx="906" cy="532" r="5"/>
+    <circle cx="986" cy="588" r="4"/>
+    <circle cx="1028" cy="640" r="4"/>
+    <circle cx="848" cy="602" r="4"/>
+    <circle cx="758" cy="646" r="4"/>
+    <circle cx="1160" cy="632" r="4"/>
   </g>
 </svg>
