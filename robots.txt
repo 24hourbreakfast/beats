@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /beats/
+Sitemap: https://bernban.com/sitemap.xml
