@@ -53,11 +53,12 @@
       const row = (track) => {
         const safeTitle = escapeHtml(track.title || track.file || "Untitled");
         const dateLabel = escapeHtml(track.date_label || "Unknown date");
+        const isFeatured = String(track.title || "").toLowerCase().includes("dream code");
         const src = encodeURIComponent(track.file || "");
         return `
           <article class="track-card">
             <div class="track-head">
-              <h3>${safeTitle}</h3>
+              <h3>${safeTitle}${isFeatured ? ' <span class="featured">Featured</span>' : ""}</h3>
               <span class="track-date">${dateLabel}</span>
             </div>
             <div class="track-controls">
@@ -66,14 +67,21 @@
             </div>
             <div class="track-meta">
               <span data-role="time">0:00 / --:--</span>
-              <a href="${src}" download>Download</a>
             </div>
-            <audio preload="none" src="${src}"></audio>
+            <audio preload="none" src="${src}" controlslist="nodownload noplaybackrate"></audio>
           </article>
         `;
       };
 
-      const bindPlayer = (trackEl) => {
+      const playAt = (idx, cards) => {
+        if (idx < 0 || idx >= cards.length) return;
+        const audio = cards[idx].querySelector("audio");
+        if (!audio) return;
+        audio.play();
+        active = audio;
+      };
+
+      const bindPlayer = (trackEl, idx, cards) => {
         const audio = trackEl.querySelector("audio");
         const button = trackEl.querySelector("[data-action='play']");
         const seek = trackEl.querySelector("[data-role='seek']");
@@ -106,7 +114,10 @@
 
         audio.addEventListener("timeupdate", sync);
         audio.addEventListener("loadedmetadata", sync);
-        audio.addEventListener("ended", sync);
+        audio.addEventListener("ended", () => {
+          sync();
+          playAt(idx + 1, cards);
+        });
 
         seek.addEventListener("input", () => {
           if (!audio.duration) return;
@@ -122,12 +133,19 @@
         })
         .then((data) => {
           const tracks = Array.isArray(data.tracks) ? data.tracks : [];
+          tracks.sort((a, b) => {
+            const aFeatured = String(a.title || "").toLowerCase().includes("dream code");
+            const bFeatured = String(b.title || "").toLowerCase().includes("dream code");
+            if (aFeatured === bFeatured) return 0;
+            return aFeatured ? -1 : 1;
+          });
           if (!tracks.length) {
             list.innerHTML = '<p class="empty">No tracks yet.</p>';
             return;
           }
           list.innerHTML = tracks.map(row).join("");
-          Array.from(list.querySelectorAll(".track-card")).forEach(bindPlayer);
+          const cards = Array.from(list.querySelectorAll(".track-card"));
+          cards.forEach((card, idx) => bindPlayer(card, idx, cards));
         })
         .catch(() => {
           list.innerHTML = '<p class="empty">Could not load track list.</p>';

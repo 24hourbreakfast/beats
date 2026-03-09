@@ -1,9 +1,45 @@
 {
-  "generated_at": "2026-02-23T03:02:51Z",
+  "generated_at": "2026-03-09T00:27:52Z",
   "tracks": [
     {
       "file": "bern ban-you up.mp3",
       "title": "bern ban you up",
+      "date_label": "Unknown date",
+      "timestamp": null
+    },
+    {
+      "file": "Bern Ban - Turbo Wave.mp3",
+      "title": "Bern Ban Turbo Wave",
+      "date_label": "Unknown date",
+      "timestamp": null
+    },
+    {
+      "file": "Bern Ban - Takeout.mp3",
+      "title": "Bern Ban Takeout",
+      "date_label": "Unknown date",
+      "timestamp": null
+    },
+    {
+      "file": "Bern Ban - Sparkle Life.mp3",
+      "title": "Bern Ban Sparkle Life",
+      "date_label": "Unknown date",
+      "timestamp": null
+    },
+    {
+      "file": "Bern Ban - Dream Reveal.mp3",
+      "title": "Bern Ban Dream Reveal",
+      "date_label": "Unknown date",
+      "timestamp": null
+    },
+    {
+      "file": "Bern Ban - Dream Code.mp3",
+      "title": "Bern Ban Dream Code",
+      "date_label": "Unknown date",
+      "timestamp": null
+    },
+    {
+      "file": "Bern Ban - Candy Heart.mp3",
+      "title": "Bern Ban Candy Heart",
       "date_label": "Unknown date",
       "timestamp": null
     }

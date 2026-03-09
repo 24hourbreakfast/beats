@@ -259,6 +259,20 @@ body::before {
   text-transform: uppercase;
 }
 
+.featured {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 7px;
+  border: 1px solid rgba(255, 94, 207, 0.72);
+  border-radius: 999px;
+  font: 700 10px/1 "Orbitron", sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(255, 94, 207, 0.22);
+  vertical-align: middle;
+}
+
 .track-date {
   color: var(--muted);
   font: 700 12px/1 "Orbitron", sans-serif;

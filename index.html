@@ -17,7 +17,6 @@
     <nav class="menu">
       <p class="menu-logo">Bern Ban</p>
       <div class="menu-links">
-        <a href="#placements">Placements</a>
         <a href="mailto:bernban@bernban.com">Contact</a>
         <a href="https://x.com/bernban" rel="noopener noreferrer">Social</a>
       </div>
@@ -33,15 +32,134 @@
       </div>
     </section>
 
-    <section id="placements" class="panel">
-      <h2>Placements Include</h2>
-      <div class="logo-grid">
-        <div class="logo-slot"></div>
-        <div class="logo-slot"></div>
-        <div class="logo-slot"></div>
-        <div class="logo-slot"></div>
-      </div>
+    <section class="panel">
+      <h2>Stream Tracks</h2>
+      <section id="main-track-list" class="track-list" aria-live="polite"></section>
     </section>
   </main>
+
+  <script>
+    (() => {
+      const list = document.getElementById("main-track-list");
+
+      const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      }[ch]));
+
+      const fmt = (seconds) => {
+        if (!Number.isFinite(seconds)) return "--:--";
+        const s = Math.floor(seconds);
+        const m = Math.floor(s / 60);
+        return m + ":" + String(s % 60).padStart(2, "0");
+      };
+
+      let active = null;
+
+      const row = (track) => {
+        const safeTitle = escapeHtml(track.title || track.file || "Untitled");
+        const dateLabel = escapeHtml(track.date_label || "Unknown date");
+        const isFeatured = String(track.title || "").toLowerCase().includes("dream code");
+        const src = "/beats/" + encodeURIComponent(track.file || "");
+        return `
+          <article class="track-card">
+            <div class="track-head">
+              <h3>${safeTitle}${isFeatured ? ' <span class="featured">Featured</span>' : ""}</h3>
+              <span class="track-date">${dateLabel}</span>
+            </div>
+            <div class="track-controls">
+              <button class="play" type="button" data-action="play">Play</button>
+              <input class="seek" type="range" min="0" max="100" value="0" step="0.1" data-role="seek" aria-label="Seek">
+            </div>
+            <div class="track-meta">
+              <span data-role="time">0:00 / --:--</span>
+            </div>
+            <audio preload="none" src="${src}" controlslist="nodownload noplaybackrate"></audio>
+          </article>
+        `;
+      };
+
+      const playAt = (idx, cards) => {
+        if (idx < 0 || idx >= cards.length) return;
+        const audio = cards[idx].querySelector("audio");
+        if (!audio) return;
+        audio.play();
+        active = audio;
+      };
+
+      const bindPlayer = (trackEl, idx, cards) => {
+        const audio = trackEl.querySelector("audio");
+        const button = trackEl.querySelector("[data-action='play']");
+        const seek = trackEl.querySelector("[data-role='seek']");
+        const time = trackEl.querySelector("[data-role='time']");
+
+        const sync = () => {
+          const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+          seek.value = pct;
+          time.textContent = fmt(audio.currentTime) + " / " + fmt(audio.duration);
+        };
+
+        button.addEventListener("click", () => {
+          if (active && active !== audio) active.pause();
+          if (audio.paused) {
+            audio.play();
+            active = audio;
+          } else {
+            audio.pause();
+          }
+        });
+
+        audio.addEventListener("play", () => {
+          button.textContent = "Pause";
+        });
+
+        audio.addEventListener("pause", () => {
+          button.textContent = "Play";
+          if (active === audio) active = null;
+        });
+
+        audio.addEventListener("timeupdate", sync);
+        audio.addEventListener("loadedmetadata", sync);
+        audio.addEventListener("ended", () => {
+          sync();
+          playAt(idx + 1, cards);
+        });
+
+        seek.addEventListener("input", () => {
+          if (!audio.duration) return;
+          audio.currentTime = (Number(seek.value) / 100) * audio.duration;
+          sync();
+        });
+      };
+
+      fetch("/beats/tracks.json?t=" + Date.now(), { cache: "no-store" })
+        .then((res) => {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then((data) => {
+          const tracks = Array.isArray(data.tracks) ? data.tracks : [];
+          tracks.sort((a, b) => {
+            const aFeatured = String(a.title || "").toLowerCase().includes("dream code");
+            const bFeatured = String(b.title || "").toLowerCase().includes("dream code");
+            if (aFeatured === bFeatured) return 0;
+            return aFeatured ? -1 : 1;
+          });
+          if (!tracks.length) {
+            list.innerHTML = '<p class="empty">No tracks yet.</p>';
+            return;
+          }
+          list.innerHTML = tracks.map(row).join("");
+          const cards = Array.from(list.querySelectorAll(".track-card"));
+          cards.forEach((card, idx) => bindPlayer(card, idx, cards));
+        })
+        .catch(() => {
+          list.innerHTML = '<p class="empty">Could not load track list.</p>';
+        });
+    })();
+  </script>
 </body>
 </html>
