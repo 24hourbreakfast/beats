@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5f9ff"/>
+      <stop offset="1" stop-color="#e6f2ff"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#56d9ff"/>
+      <stop offset="1" stop-color="#4ff0ca"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="680" fill="url(#bg)"/>
+  <g transform="translate(590 360)">
+    <ellipse cx="0" cy="170" rx="270" ry="40" fill="#d9e7f5"/>
+    <path d="M-240 40c0-130 105-220 230-220h10c125 0 230 90 230 220v85c0 50-40 90-90 90h-290c-50 0-90-40-90-90z" fill="#ffffff" stroke="#d5e3f2" stroke-width="8"/>
+    <path d="M-175 -60l35-110 80 70z" fill="#ffffff" stroke="#d5e3f2" stroke-width="8"/>
+    <path d="M175 -60l-35-110-80 70z" fill="#ffffff" stroke="#d5e3f2" stroke-width="8"/>
+    <ellipse cx="-75" cy="25" rx="34" ry="24" fill="#53dcff"/>
+    <ellipse cx="75" cy="25" rx="34" ry="24" fill="#53dcff"/>
+    <circle cx="-75" cy="25" r="9" fill="#0d3048"/>
+    <circle cx="75" cy="25" r="9" fill="#0d3048"/>
+    <path d="M-58 90q58 36 116 0" fill="none" stroke="#8bb5d1" stroke-width="10" stroke-linecap="round"/>
+    <rect x="-32" y="196" width="64" height="22" rx="11" fill="#2f4d65"/>
+    <circle cx="0" cy="207" r="6" fill="#4ff0ca"/>
+    <path d="M225 65q115 35 145 120" fill="none" stroke="#d1deeb" stroke-width="20" stroke-linecap="round"/>
+    <path d="M352 193q18 22 38 16" fill="none" stroke="#d1deeb" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="0" cy="20" r="288" fill="none" stroke="url(#ring)" stroke-width="8" opacity=".35"/>
+  </g>
+  <text x="66" y="84" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="46" font-weight="700" fill="#123148">PetProxy PX-3</text>
+  <text x="66" y="124" font-family="Avenir Next, Segoe UI, Arial, sans-serif" font-size="22" fill="#4a6a80">Companion intelligence for continuous calm</text>
+</svg>
