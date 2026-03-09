@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-09T00:27:52Z",
+  "generated_at": "2026-03-09T00:55:41Z",
   "tracks": [
     {
       "file": "bern ban-you up.mp3",
@@ -22,6 +22,12 @@
     {
       "file": "Bern Ban - Sparkle Life.mp3",
       "title": "Bern Ban Sparkle Life",
+      "date_label": "Unknown date",
+      "timestamp": null
+    },
+    {
+      "file": "Bern Ban - Dripping Wealth.mp3",
+      "title": "Bern Ban Dripping Wealth",
       "date_label": "Unknown date",
       "timestamp": null
     },

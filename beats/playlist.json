@@ -1,9 +1,17 @@
 {
-  "order_titles": [
-    "Dream Code",
-    "Sparkle Life",
-    "Dream Reveal",
-    "Takeout"
+  "playlist": [
+    {
+      "title": "Dream Reveal",
+      "artwork": "/assets/art-dream-reveal.svg"
+    },
+    {
+      "title": "Sparkle Life",
+      "artwork": "/assets/art-sparkle-life.svg"
+    },
+    {
+      "title": "Dripping Wealth",
+      "artwork": "/assets/art-dripping-wealth.svg"
+    }
   ],
   "exclude_titles": [
     "You Up"

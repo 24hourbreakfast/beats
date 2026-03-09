@@ -27,6 +27,7 @@
       <p class="beats-sub">Private workspace for active collaboration.</p>
       <section class="player-shell" aria-live="polite">
         <div class="player-main">
+          <img id="now-art" class="now-art" src="/assets/art-dream-reveal.svg" alt="" />
           <p id="now-title" class="now-title">Select a track</p>
           <p id="now-date" class="now-date"></p>
           <audio id="main-player" controls preload="none" controlslist="nodownload noplaybackrate"></audio>
@@ -42,6 +43,7 @@
       const player = document.getElementById("main-player");
       const nowTitle = document.getElementById("now-title");
       const nowDate = document.getElementById("now-date");
+      const nowArt = document.getElementById("now-art");
 
       const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
         "&": "&amp;",
@@ -73,9 +75,11 @@
         const safeTitle = escapeHtml(cleanTitle(track));
         const dateLabel = cleanDate(track.date_label);
         const safeDate = escapeHtml(dateLabel);
+        const safeArtwork = escapeHtml(track.artwork || "/assets/art-dream-reveal.svg");
         return `
           <li>
             <button class="track-btn" type="button" data-idx="${idx}">
+              <img class="track-art" src="${safeArtwork}" alt="" loading="lazy" />
               <span class="track-name">${safeTitle}</span>
               <span class="track-date">${safeDate}</span>
             </button>
@@ -99,6 +103,7 @@
         player.src = encodeURIComponent(track.file || "");
         nowTitle.textContent = cleanTitle(track);
         nowDate.textContent = cleanDate(track.date_label);
+        nowArt.src = track.artwork || "/assets/art-dream-reveal.svg";
         highlight();
         if (autoplay) player.play();
       };
@@ -130,6 +135,23 @@
           });
       };
 
+      const applyStrictPlaylist = (allTracks, cfg) => {
+        const listCfg = Array.isArray(cfg.playlist) ? cfg.playlist : [];
+        if (!listCfg.length) return null;
+        const byTitle = new Map(allTracks.map((track) => [normalized(track.title || track.file || ""), track]));
+        return listCfg
+          .map((item) => {
+            const key = normalized(item.title || "");
+            const found = byTitle.get(key);
+            if (!found) return null;
+            return {
+              ...found,
+              artwork: item.artwork || "/assets/art-dream-reveal.svg"
+            };
+          })
+          .filter(Boolean);
+      };
+
       Promise.all([
         fetch("tracks.json?t=" + Date.now(), { cache: "no-store" }).then((res) => {
           if (!res.ok) throw new Error("HTTP " + res.status);
@@ -141,7 +163,8 @@
       ])
         .then(([data, playlistCfg]) => {
           const allTracks = Array.isArray(data.tracks) ? data.tracks : [];
-          tracks = applyPlaylistConfig(allTracks, playlistCfg);
+          const strict = applyStrictPlaylist(allTracks, playlistCfg);
+          tracks = strict && strict.length ? strict : applyPlaylistConfig(allTracks, playlistCfg);
           if (!tracks.length) {
             list.innerHTML = '<p class="empty">No tracks yet.</p>';
             return;

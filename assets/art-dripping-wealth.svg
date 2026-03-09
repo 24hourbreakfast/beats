@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-label="">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06031d"/>
+      <stop offset="50%" stop-color="#28106a"/>
+      <stop offset="100%" stop-color="#083362"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="38%" r="50%">
+      <stop offset="0%" stop-color="#ffe9a6" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#ff73ec" stop-opacity="0.75"/>
+      <stop offset="70%" stop-color="#74ecff" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#74ecff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="drip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe089"/>
+      <stop offset="35%" stop-color="#ff89f4"/>
+      <stop offset="100%" stop-color="#66ecff"/>
+    </linearGradient>
+    <linearGradient id="crystal" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#63ecff"/>
+      <stop offset="60%" stop-color="#8d95ff"/>
+      <stop offset="100%" stop-color="#ff7bea"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <circle cx="600" cy="420" r="370" fill="url(#halo)"/>
+  <g filter="url(#glow)" fill="url(#drip)" opacity="0.95">
+    <path d="M285 120c24 35 42 72 42 112 0 53-34 96-42 148-7-54-41-95-41-148 0-40 16-77 41-112z"/>
+    <path d="M418 82c30 44 52 90 52 140 0 63-43 114-52 176-9-64-51-112-51-176 0-50 19-96 51-140z"/>
+    <path d="M593 56c36 54 64 109 64 170 0 77-53 138-64 214-11-78-63-136-63-214 0-61 24-116 63-170z"/>
+    <path d="M780 90c31 45 54 93 54 144 0 66-44 120-54 186-9-68-52-118-52-186 0-51 20-99 52-144z"/>
+    <path d="M932 140c24 35 42 72 42 112 0 53-34 96-42 148-7-54-41-95-41-148 0-40 16-77 41-112z"/>
+  </g>
+  <g filter="url(#glow)" opacity="0.88">
+    <polygon points="230,980 370,560 495,980" fill="url(#crystal)"/>
+    <polygon points="470,980 630,470 785,980" fill="url(#crystal)"/>
+    <polygon points="720,980 890,610 1015,980" fill="url(#crystal)"/>
+  </g>
+  <g filter="url(#glow)" stroke="#75efff" stroke-width="11" fill="none" stroke-linecap="round">
+    <path d="M144 760c92-129 214-106 304-40 89 66 203 61 294-8 70-52 149-65 231-21" opacity="0.86"/>
+  </g>
+  <g fill="#fff" opacity="0.84">
+    <circle cx="125" cy="228" r="2.5"/><circle cx="198" cy="302" r="2"/><circle cx="336" cy="256" r="3"/>
+    <circle cx="520" cy="212" r="2.5"/><circle cx="678" cy="278" r="2.3"/><circle cx="851" cy="236" r="2.8"/>
+    <circle cx="1036" cy="288" r="2.2"/><circle cx="1110" cy="198" r="2.6"/>
+  </g>
+</svg>

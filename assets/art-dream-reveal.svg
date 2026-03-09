@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-label="">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090726"/>
+      <stop offset="45%" stop-color="#2c1170"/>
+      <stop offset="100%" stop-color="#092749"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="50%" cy="36%" r="42%">
+      <stop offset="0%" stop-color="#ffe18f" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#ff66dd" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ff66dd" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="crystalA" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#58e9ff"/>
+      <stop offset="48%" stop-color="#f581ff"/>
+      <stop offset="100%" stop-color="#ffe78b"/>
+    </linearGradient>
+    <linearGradient id="crystalB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#80a7ff"/>
+      <stop offset="52%" stop-color="#74f4ff"/>
+      <stop offset="100%" stop-color="#f873ff"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <circle cx="600" cy="430" r="330" fill="url(#moon)"/>
+  <g fill="#fff" opacity="0.9">
+    <circle cx="140" cy="110" r="3"/><circle cx="260" cy="180" r="2"/><circle cx="380" cy="130" r="2.5"/>
+    <circle cx="520" cy="80" r="3"/><circle cx="670" cy="170" r="2"/><circle cx="760" cy="120" r="2.5"/>
+    <circle cx="900" cy="190" r="3"/><circle cx="1030" cy="130" r="2"/><circle cx="1090" cy="220" r="2.5"/>
+  </g>
+  <g filter="url(#glow)" opacity="0.92">
+    <polygon points="300,940 470,410 580,940" fill="url(#crystalA)"/>
+    <polygon points="470,940 640,320 770,940" fill="url(#crystalB)"/>
+    <polygon points="630,940 820,430 940,940" fill="url(#crystalA)"/>
+    <polygon points="190,940 350,540 440,940" fill="url(#crystalB)"/>
+  </g>
+  <g filter="url(#glow)" stroke="#7ff2ff" stroke-width="12" fill="none" stroke-linecap="round">
+    <path d="M120 730c80-130 220-110 320-40 70 48 150 53 225 12 55-30 130-61 213-35" opacity="0.85"/>
+    <path d="M355 667c45-42 102-58 168-35 42 16 88 16 135-5" opacity="0.65"/>
+  </g>
+  <g filter="url(#glow)" fill="#6af4ff" opacity="0.8">
+    <circle cx="180" cy="640" r="7"/><circle cx="230" cy="610" r="5"/><circle cx="290" cy="630" r="5"/>
+    <circle cx="740" cy="640" r="6"/><circle cx="810" cy="620" r="4"/><circle cx="875" cy="650" r="5"/>
+  </g>
+</svg>
