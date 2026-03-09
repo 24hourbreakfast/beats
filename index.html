@@ -37,6 +37,13 @@
   </script>
 </head>
 <body>
+  <form name="investor-intake" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="investor-intake">
+    <p><label>Don't fill this out if you're human: <input name="bot-field" type="text"></label></p>
+    <p><label>Full name <input type="text" name="full_name"></label></p>
+    <p><label>Email <input type="email" name="email"></label></p>
+    <p><label>Note <textarea name="note"></textarea></label></p>
+  </form>
   <div class="site-bg" aria-hidden="true"></div>
   <div class="glitter" aria-hidden="true"></div>
   <main class="wrap">
