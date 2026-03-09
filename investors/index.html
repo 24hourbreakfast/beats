@@ -128,6 +128,44 @@
       padding: 12px;
       font-size: 14px;
     }
+    .signup { margin-top: 14px; }
+    .signup p { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .form-grid .full { grid-column: 1 / -1; }
+    .signup label {
+      display: block;
+      font-size: 12px;
+      color: #395166;
+      margin-bottom: 4px;
+      font-weight: 600;
+      letter-spacing: .2px;
+    }
+    .signup input, .signup textarea {
+      width: 100%;
+      border: 1px solid #c8d8eb;
+      border-radius: 8px;
+      padding: 10px 11px;
+      font-size: 14px;
+      color: #173042;
+      background: #fff;
+      font-family: inherit;
+    }
+    .signup textarea { min-height: 84px; resize: vertical; }
+    .signup button {
+      border: 0;
+      border-radius: 8px;
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      color: #fff;
+      font-weight: 700;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .hidden-field { display: none; }
     .footer {
       margin-top: 14px;
       color: #6f7f8c;
@@ -209,6 +247,32 @@
     <section class="card cta">
       <strong>Capital Access Window:</strong> registration for the next allocation cycle is currently closed.
       Allocation confirmations are temporarily paused pending board approval and next-quarter opening schedule.
+    </section>
+
+    <section class="card signup">
+      <h3>Investor Interest Registry</h3>
+      <p>Submit your contact details to receive the next allocation window notice.</p>
+      <form name="investor-intake" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="investor-intake">
+        <p class="hidden-field"><label>Don’t fill this out: <input name="bot-field"></label></p>
+        <div class="form-grid">
+          <div>
+            <label for="full_name">Full name</label>
+            <input id="full_name" name="full_name" type="text" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required>
+          </div>
+          <div class="full">
+            <label for="note">Optional note</label>
+            <textarea id="note" name="note" placeholder="Region, check size, and strategic interest"></textarea>
+          </div>
+          <div class="full">
+            <button type="submit">Join Registry</button>
+          </div>
+        </div>
+      </form>
     </section>
 
     <p class="footer">
