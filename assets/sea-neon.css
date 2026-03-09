@@ -106,7 +106,8 @@ body::before {
   justify-content: flex-end;
 }
 
-.menu a {
+.menu a,
+.social-trigger {
   text-decoration: none;
   color: var(--ink);
   font: 700 12px/1 "Orbitron", sans-serif;
@@ -116,6 +117,51 @@ body::before {
   background: rgba(255, 94, 207, 0.14);
   padding: 9px 14px;
   border-radius: 999px;
+}
+
+.social-menu {
+  position: relative;
+}
+
+.social-trigger {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.social-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.social-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 170px;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid rgba(102, 239, 255, 0.58);
+  background: linear-gradient(145deg, rgba(8, 10, 34, 0.94), rgba(20, 10, 52, 0.92));
+  box-shadow: 0 0 30px rgba(102, 239, 255, 0.15);
+  display: none;
+  z-index: 20;
+}
+
+.social-menu[open] .social-popover {
+  display: grid;
+  gap: 6px;
+}
+
+.social-popover a {
+  text-decoration: none;
+  color: var(--ink);
+  font: 700 12px/1 "Orbitron", sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid rgba(102, 239, 255, 0.5);
+  border-radius: 9px;
+  padding: 9px 10px;
+  background: linear-gradient(130deg, rgba(255, 94, 207, 0.16), rgba(102, 239, 255, 0.15));
 }
 
 .hero {
@@ -166,7 +212,8 @@ body::before {
   flex-wrap: wrap;
 }
 
-.hero-actions a {
+.hero-actions a,
+.hero-actions .social-trigger {
   text-decoration: none;
   color: var(--ink);
   font: 700 13px/1 "Orbitron", sans-serif;
