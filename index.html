@@ -34,13 +34,23 @@
 
     <section class="panel">
       <h2>Stream Tracks</h2>
-      <section id="main-track-list" class="track-list" aria-live="polite"></section>
+      <section class="player-shell" aria-live="polite">
+        <div class="player-main">
+          <p id="now-title" class="now-title">Select a track</p>
+          <p id="now-date" class="now-date"></p>
+          <audio id="main-player" controls preload="none" controlslist="nodownload noplaybackrate"></audio>
+        </div>
+        <ol id="main-playlist" class="playlist"></ol>
+      </section>
     </section>
   </main>
 
   <script>
     (() => {
-      const list = document.getElementById("main-track-list");
+      const list = document.getElementById("main-playlist");
+      const player = document.getElementById("main-player");
+      const nowTitle = document.getElementById("now-title");
+      const nowDate = document.getElementById("now-date");
 
       const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
         "&": "&amp;",
@@ -57,104 +67,102 @@
         return m + ":" + String(s % 60).padStart(2, "0");
       };
 
-      let active = null;
+      const cleanTitle = (track) => {
+        const source = track.title || track.file || "Untitled";
+        return source.replace(/^bern ban\s*[-–—]?\s*/i, "").trim() || "Untitled";
+      };
 
-      const row = (track) => {
-        const safeTitle = escapeHtml(track.title || track.file || "Untitled");
-        const dateLabel = escapeHtml(track.date_label || "Unknown date");
-        const isFeatured = String(track.title || "").toLowerCase().includes("dream code");
-        const src = "/beats/" + encodeURIComponent(track.file || "");
+      const cleanDate = (label) => {
+        const v = (label || "").trim();
+        if (!v || v.toLowerCase() === "unknown date") return "";
+        return v;
+      };
+
+      const row = (track, idx) => {
+        const safeTitle = escapeHtml(cleanTitle(track));
+        const dateLabel = cleanDate(track.date_label);
+        const safeDate = escapeHtml(dateLabel);
         return `
-          <article class="track-card">
-            <div class="track-head">
-              <h3>${safeTitle}${isFeatured ? ' <span class="featured">Featured</span>' : ""}</h3>
-              <span class="track-date">${dateLabel}</span>
-            </div>
-            <div class="track-controls">
-              <button class="play" type="button" data-action="play">Play</button>
-              <input class="seek" type="range" min="0" max="100" value="0" step="0.1" data-role="seek" aria-label="Seek">
-            </div>
-            <div class="track-meta">
-              <span data-role="time">0:00 / --:--</span>
-            </div>
-            <audio preload="none" src="${src}" controlslist="nodownload noplaybackrate"></audio>
-          </article>
+          <li>
+            <button class="track-btn" type="button" data-idx="${idx}">
+              <span class="track-name">${safeTitle}</span>
+              <span class="track-date">${safeDate}</span>
+            </button>
+          </li>
         `;
       };
 
-      const playAt = (idx, cards) => {
-        if (idx < 0 || idx >= cards.length) return;
-        const audio = cards[idx].querySelector("audio");
-        if (!audio) return;
-        audio.play();
-        active = audio;
-      };
+      let tracks = [];
+      let current = -1;
 
-      const bindPlayer = (trackEl, idx, cards) => {
-        const audio = trackEl.querySelector("audio");
-        const button = trackEl.querySelector("[data-action='play']");
-        const seek = trackEl.querySelector("[data-role='seek']");
-        const time = trackEl.querySelector("[data-role='time']");
-
-        const sync = () => {
-          const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
-          seek.value = pct;
-          time.textContent = fmt(audio.currentTime) + " / " + fmt(audio.duration);
-        };
-
-        button.addEventListener("click", () => {
-          if (active && active !== audio) active.pause();
-          if (audio.paused) {
-            audio.play();
-            active = audio;
-          } else {
-            audio.pause();
-          }
-        });
-
-        audio.addEventListener("play", () => {
-          button.textContent = "Pause";
-        });
-
-        audio.addEventListener("pause", () => {
-          button.textContent = "Play";
-          if (active === audio) active = null;
-        });
-
-        audio.addEventListener("timeupdate", sync);
-        audio.addEventListener("loadedmetadata", sync);
-        audio.addEventListener("ended", () => {
-          sync();
-          playAt(idx + 1, cards);
-        });
-
-        seek.addEventListener("input", () => {
-          if (!audio.duration) return;
-          audio.currentTime = (Number(seek.value) / 100) * audio.duration;
-          sync();
+      const highlight = () => {
+        Array.from(list.querySelectorAll(".track-btn")).forEach((btn) => {
+          btn.classList.toggle("active", Number(btn.dataset.idx) === current);
         });
       };
 
-      fetch("/beats/tracks.json?t=" + Date.now(), { cache: "no-store" })
-        .then((res) => {
+      const loadTrack = (idx, autoplay) => {
+        if (idx < 0 || idx >= tracks.length) return;
+        const track = tracks[idx];
+        current = idx;
+        player.src = "/beats/" + encodeURIComponent(track.file || "");
+        nowTitle.textContent = cleanTitle(track);
+        nowDate.textContent = cleanDate(track.date_label);
+        highlight();
+        if (autoplay) player.play();
+      };
+
+      const normalized = (value) => cleanTitle({ title: value }).toLowerCase();
+
+      const applyPlaylistConfig = (allTracks, cfg) => {
+        const config = cfg || {};
+        const excludeTitles = new Set((config.exclude_titles || []).map(normalized));
+        const excludeFiles = new Set((config.exclude_files || []).map((v) => String(v || "").toLowerCase()));
+        const desiredOrder = (config.order_titles || []).map(normalized);
+        const orderMap = new Map(desiredOrder.map((title, idx) => [title, idx]));
+
+        return allTracks
+          .filter((track) => {
+            const titleKey = normalized(track.title || track.file || "");
+            const fileKey = String(track.file || "").toLowerCase();
+            if (excludeTitles.has(titleKey)) return false;
+            if (excludeFiles.has(fileKey)) return false;
+            return true;
+          })
+          .sort((a, b) => {
+            const aKey = normalized(a.title || a.file || "");
+            const bKey = normalized(b.title || b.file || "");
+            const aPos = orderMap.has(aKey) ? orderMap.get(aKey) : Number.POSITIVE_INFINITY;
+            const bPos = orderMap.has(bKey) ? orderMap.get(bKey) : Number.POSITIVE_INFINITY;
+            if (aPos !== bPos) return aPos - bPos;
+            return aKey.localeCompare(bKey);
+          });
+      };
+
+      Promise.all([
+        fetch("/beats/tracks.json?t=" + Date.now(), { cache: "no-store" }).then((res) => {
           if (!res.ok) throw new Error("HTTP " + res.status);
           return res.json();
-        })
-        .then((data) => {
-          const tracks = Array.isArray(data.tracks) ? data.tracks : [];
-          tracks.sort((a, b) => {
-            const aFeatured = String(a.title || "").toLowerCase().includes("dream code");
-            const bFeatured = String(b.title || "").toLowerCase().includes("dream code");
-            if (aFeatured === bFeatured) return 0;
-            return aFeatured ? -1 : 1;
-          });
+        }),
+        fetch("/beats/playlist.json?t=" + Date.now(), { cache: "no-store" })
+          .then((res) => (res.ok ? res.json() : {}))
+          .catch(() => ({}))
+      ])
+        .then(([data, playlistCfg]) => {
+          const allTracks = Array.isArray(data.tracks) ? data.tracks : [];
+          tracks = applyPlaylistConfig(allTracks, playlistCfg);
           if (!tracks.length) {
             list.innerHTML = '<p class="empty">No tracks yet.</p>';
             return;
           }
-          list.innerHTML = tracks.map(row).join("");
-          const cards = Array.from(list.querySelectorAll(".track-card"));
-          cards.forEach((card, idx) => bindPlayer(card, idx, cards));
+          list.innerHTML = tracks.map((track, idx) => row(track, idx)).join("");
+          list.addEventListener("click", (event) => {
+            const btn = event.target.closest(".track-btn");
+            if (!btn) return;
+            loadTrack(Number(btn.dataset.idx), true);
+          });
+          loadTrack(0, false);
+          player.addEventListener("ended", () => loadTrack(current + 1, true));
         })
         .catch(() => {
           list.innerHTML = '<p class="empty">Could not load track list.</p>';
