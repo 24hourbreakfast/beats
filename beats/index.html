@@ -50,13 +50,8 @@
         "'": "&#39;"
       }[ch]));
 
-      const cleanTitle = (track) => {
-        const source = track.title || track.file || "Untitled";
-        return source
-          .replace(/^bern ban\s*[-–—]?\s*/i, "")
-          .replace(/\s+\d{6}\b/g, "")
-          .replace(/\s*-\s*$/g, "")
-          .trim() || "Untitled";
+      const displayTitle = (track) => {
+        return (track.file || track.title || "Untitled").trim() || "Untitled";
       };
 
       const trackUrl = (track) => {
@@ -64,7 +59,7 @@
       };
 
       const setNowPlaying = (track) => {
-        nowTitle.textContent = cleanTitle(track);
+        nowTitle.textContent = displayTitle(track);
         nowDate.textContent = track.date_label || "";
         player.src = trackUrl(track);
       };
@@ -78,7 +73,7 @@
       };
 
       const row = (track, idx) => {
-        const safeTitle = escapeHtml(cleanTitle(track));
+        const safeTitle = escapeHtml(displayTitle(track));
         const safeDate = escapeHtml(track.date_label || "");
         const safeUrl = escapeHtml(trackUrl(track));
         return `
