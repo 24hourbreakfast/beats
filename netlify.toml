@@ -17,6 +17,11 @@
     X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
 
 [[headers]]
+  for = "/inprogress/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+
+[[headers]]
   for = "/investors/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"

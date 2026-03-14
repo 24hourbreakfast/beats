@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate beats/tracks.json for static hosting (Netlify/GitHub Pages)."""
+"""Generate track manifests for static hosting (Netlify/GitHub Pages)."""
 
 from __future__ import annotations
 
@@ -32,7 +32,7 @@ def nice_title(filename: str) -> str:
     return stem or "Untitled"
 
 
-def sort_key(path: Path) -> tuple[int, str]:
+def sort_key_timestamp(path: Path) -> tuple[int, str]:
     stamp = parse_stamp(path.name)
     if stamp:
         return (int(stamp.timestamp()), path.name.lower())
@@ -40,18 +40,32 @@ def sort_key(path: Path) -> tuple[int, str]:
     return (0, path.name.lower())
 
 
-def build_manifest(beats_dir: Path) -> dict[str, object]:
-    mp3s = [p for p in beats_dir.glob("*.mp3") if p.is_file()]
-    mp3s.sort(key=sort_key, reverse=True)
+def sort_key_mtime(path: Path) -> tuple[float, str]:
+    return (path.stat().st_mtime, path.name.lower())
+
+
+def build_manifest(tracks_dir: Path, sort_by: str, date_source: str) -> dict[str, object]:
+    mp3s = [p for p in tracks_dir.glob("*.mp3") if p.is_file()]
+    if sort_by == "mtime":
+        mp3s.sort(key=sort_key_mtime, reverse=True)
+    else:
+        mp3s.sort(key=sort_key_timestamp, reverse=True)
     tracks = []
     for path in mp3s:
         stamp = parse_stamp(path.name)
+        modified = datetime.fromtimestamp(path.stat().st_mtime)
+        if date_source == "mtime":
+            date_label = modified.strftime("%b %-d, %Y")
+            timestamp = modified.isoformat()
+        else:
+            date_label = stamp.strftime("%b %-d, %Y") if stamp else "Unknown date"
+            timestamp = stamp.isoformat() if stamp else None
         tracks.append(
             {
                 "file": path.name,
                 "title": nice_title(path.name),
-                "date_label": stamp.strftime("%b %-d, %Y") if stamp else "Unknown date",
-                "timestamp": stamp.isoformat() if stamp else None,
+                "date_label": date_label,
+                "timestamp": timestamp,
             }
         )
     return {
@@ -72,11 +86,23 @@ def main() -> int:
         default="beats/tracks.json",
         help="Output manifest file path",
     )
+    parser.add_argument(
+        "--sort-by",
+        choices=("timestamp", "mtime"),
+        default="timestamp",
+        help="How to sort tracks",
+    )
+    parser.add_argument(
+        "--date-source",
+        choices=("timestamp", "mtime"),
+        default="timestamp",
+        help="How to generate date labels",
+    )
     args = parser.parse_args()
 
-    beats_dir = Path(args.beats_dir).resolve()
+    tracks_dir = Path(args.beats_dir).resolve()
     output = Path(args.output).resolve()
-    manifest = build_manifest(beats_dir)
+    manifest = build_manifest(tracks_dir, args.sort_by, args.date_source)
 
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")

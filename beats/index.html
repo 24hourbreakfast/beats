@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Bern Ban Beats</title>
+  <title>beats in progress</title>
   <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/sea-neon.css">
 </head>
-<body>
+<body class="beats-workbench">
   <div class="site-bg" aria-hidden="true"></div>
   <div class="glitter" aria-hidden="true"></div>
   <main class="wrap">
@@ -22,18 +22,16 @@
       </div>
     </nav>
 
-    <section class="panel">
-      <h1 class="beats-title">WIP Vault</h1>
-      <p class="beats-sub">Private workspace for active collaboration.</p>
-      <section class="player-shell" aria-live="polite">
-        <div class="player-main">
-          <img id="now-art" class="now-art" src="/assets/art-dream-reveal.svg" alt="" />
-          <p id="now-title" class="now-title">Select a track</p>
-          <p id="now-date" class="now-date"></p>
-          <audio id="main-player" controls preload="none" controlslist="nodownload noplaybackrate"></audio>
-        </div>
-        <ol id="track-list" class="playlist"></ol>
-      </section>
+    <section class="panel in-progress-panel">
+      <h1 class="beats-title">beats in progress</h1>
+      <p class="beats-sub">stream, download, or copy a direct mp3 link</p>
+      <div class="in-progress-player">
+        <p id="now-title" class="now-title">Select a beat</p>
+        <p id="now-date" class="now-date"></p>
+        <audio id="main-player" controls preload="none"></audio>
+      </div>
+      <div id="copy-status" class="copy-status" aria-live="polite"></div>
+      <div id="track-list" class="work-list"></div>
     </section>
   </main>
 
@@ -43,7 +41,7 @@
       const player = document.getElementById("main-player");
       const nowTitle = document.getElementById("now-title");
       const nowDate = document.getElementById("now-date");
-      const nowArt = document.getElementById("now-art");
+      const copyStatus = document.getElementById("copy-status");
 
       const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
         "&": "&amp;",
@@ -53,37 +51,51 @@
         "'": "&#39;"
       }[ch]));
 
-      const fmt = (seconds) => {
-        if (!Number.isFinite(seconds)) return "--:--";
-        const s = Math.floor(seconds);
-        const m = Math.floor(s / 60);
-        return m + ":" + String(s % 60).padStart(2, "0");
-      };
-
       const cleanTitle = (track) => {
         const source = track.title || track.file || "Untitled";
-        return source.replace(/^bern ban\s*[-–—]?\s*/i, "").trim() || "Untitled";
+        return source
+          .replace(/^bern ban\s*[-–—]?\s*/i, "")
+          .replace(/\s+\d{6}\b/g, "")
+          .replace(/\s*-\s*$/g, "")
+          .trim() || "Untitled";
       };
 
-      const cleanDate = (label) => {
-        const v = (label || "").trim();
-        if (!v || v.toLowerCase() === "unknown date") return "";
-        return v;
+      const trackUrl = (track) => {
+        return "/inprogress/" + encodeURIComponent(track.file || "");
+      };
+
+      const setNowPlaying = (track) => {
+        nowTitle.textContent = cleanTitle(track);
+        nowDate.textContent = track.date_label || "";
+        player.src = trackUrl(track);
+      };
+
+      const setStatus = (message) => {
+        copyStatus.textContent = message;
+        window.clearTimeout(setStatus.timer);
+        setStatus.timer = window.setTimeout(() => {
+          copyStatus.textContent = "";
+        }, 2200);
       };
 
       const row = (track, idx) => {
         const safeTitle = escapeHtml(cleanTitle(track));
-        const dateLabel = cleanDate(track.date_label);
-        const safeDate = escapeHtml(dateLabel);
-        const safeArtwork = escapeHtml(track.artwork || "/assets/art-dream-reveal.svg");
+        const safeDate = escapeHtml(track.date_label || "");
+        const safeUrl = escapeHtml(trackUrl(track));
         return `
-          <li>
-            <button class="track-btn" type="button" data-idx="${idx}">
-              <img class="track-art" src="${safeArtwork}" alt="" loading="lazy" />
-              <span class="track-name">${safeTitle}</span>
-              <span class="track-date">${safeDate}</span>
-            </button>
-          </li>
+          <article class="work-row">
+            <div class="work-meta">
+              <button class="work-play" type="button" data-idx="${idx}">Play</button>
+              <div>
+                <p class="work-title">${safeTitle}</p>
+                <p class="work-date">${safeDate}</p>
+              </div>
+            </div>
+            <div class="work-actions">
+              <a class="work-link" href="${safeUrl}" download>Download</a>
+              <button class="work-link work-copy" type="button" data-url="${safeUrl}">Copy MP3 Link</button>
+            </div>
+          </article>
         `;
       };
 
@@ -91,95 +103,58 @@
       let current = -1;
 
       const highlight = () => {
-        Array.from(list.querySelectorAll(".track-btn")).forEach((btn) => {
-          btn.classList.toggle("active", Number(btn.dataset.idx) === current);
+        Array.from(list.querySelectorAll(".work-row")).forEach((rowEl, idx) => {
+          rowEl.classList.toggle("active", idx === current);
         });
       };
 
       const loadTrack = (idx, autoplay) => {
         if (idx < 0 || idx >= tracks.length) return;
-        const track = tracks[idx];
         current = idx;
-        player.src = encodeURIComponent(track.file || "");
-        nowTitle.textContent = cleanTitle(track);
-        nowDate.textContent = cleanDate(track.date_label);
-        nowArt.src = track.artwork || "/assets/art-dream-reveal.svg";
+        setNowPlaying(tracks[idx]);
         highlight();
-        if (autoplay) player.play();
+        if (autoplay) {
+          player.play().catch(() => {});
+        }
       };
 
-      const normalized = (value) => cleanTitle({ title: value }).toLowerCase();
-
-      const applyPlaylistConfig = (allTracks, cfg) => {
-        const config = cfg || {};
-        const excludeTitles = new Set((config.exclude_titles || []).map(normalized));
-        const excludeFiles = new Set((config.exclude_files || []).map((v) => String(v || "").toLowerCase()));
-        const desiredOrder = (config.order_titles || []).map(normalized);
-        const orderMap = new Map(desiredOrder.map((title, idx) => [title, idx]));
-
-        return allTracks
-          .filter((track) => {
-            const titleKey = normalized(track.title || track.file || "");
-            const fileKey = String(track.file || "").toLowerCase();
-            if (excludeTitles.has(titleKey)) return false;
-            if (excludeFiles.has(fileKey)) return false;
-            return true;
-          })
-          .sort((a, b) => {
-            const aKey = normalized(a.title || a.file || "");
-            const bKey = normalized(b.title || b.file || "");
-            const aPos = orderMap.has(aKey) ? orderMap.get(aKey) : Number.POSITIVE_INFINITY;
-            const bPos = orderMap.has(bKey) ? orderMap.get(bKey) : Number.POSITIVE_INFINITY;
-            if (aPos !== bPos) return aPos - bPos;
-            return aKey.localeCompare(bKey);
-          });
+      const copyLink = async (url) => {
+        const absolute = new URL(url, window.location.origin).toString();
+        try {
+          await navigator.clipboard.writeText(absolute);
+          setStatus("MP3 link copied.");
+        } catch (error) {
+          setStatus("Could not copy link.");
+        }
       };
 
-      const applyStrictPlaylist = (allTracks, cfg) => {
-        const listCfg = Array.isArray(cfg.playlist) ? cfg.playlist : [];
-        if (!listCfg.length) return null;
-        const byTitle = new Map(allTracks.map((track) => [normalized(track.title || track.file || ""), track]));
-        return listCfg
-          .map((item) => {
-            const key = normalized(item.title || "");
-            const found = byTitle.get(key);
-            if (!found) return null;
-            return {
-              ...found,
-              artwork: item.artwork || "/assets/art-dream-reveal.svg"
-            };
-          })
-          .filter(Boolean);
-      };
-
-      Promise.all([
-        fetch("tracks.json?t=" + Date.now(), { cache: "no-store" }).then((res) => {
+      fetch("inprogress-tracks.json?t=" + Date.now(), { cache: "no-store" })
+        .then((res) => {
           if (!res.ok) throw new Error("HTTP " + res.status);
           return res.json();
-        }),
-        fetch("playlist.json?t=" + Date.now(), { cache: "no-store" })
-          .then((res) => (res.ok ? res.json() : {}))
-          .catch(() => ({}))
-      ])
-        .then(([data, playlistCfg]) => {
-          const allTracks = Array.isArray(data.tracks) ? data.tracks : [];
-          const strict = applyStrictPlaylist(allTracks, playlistCfg);
-          tracks = strict && strict.length ? strict : applyPlaylistConfig(allTracks, playlistCfg);
+        })
+        .then((data) => {
+          tracks = Array.isArray(data.tracks) ? data.tracks : [];
           if (!tracks.length) {
-            list.innerHTML = '<p class="empty">No tracks yet.</p>';
+            list.innerHTML = '<p class="empty">No beats in progress yet.</p>';
             return;
           }
           list.innerHTML = tracks.map((track, idx) => row(track, idx)).join("");
           list.addEventListener("click", (event) => {
-            const btn = event.target.closest(".track-btn");
-            if (!btn) return;
-            loadTrack(Number(btn.dataset.idx), true);
+            const playBtn = event.target.closest(".work-play");
+            if (playBtn) {
+              loadTrack(Number(playBtn.dataset.idx), true);
+              return;
+            }
+            const copyBtn = event.target.closest(".work-copy");
+            if (copyBtn) {
+              copyLink(copyBtn.dataset.url);
+            }
           });
           loadTrack(0, false);
-          player.addEventListener("ended", () => loadTrack(current + 1, true));
         })
         .catch(() => {
-          list.innerHTML = '<p class="empty">Could not load track list.</p>';
+          list.innerHTML = '<p class="empty">Could not load beats in progress.</p>';
         });
     })();
   </script>

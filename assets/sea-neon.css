@@ -72,6 +72,40 @@ body::before {
   z-index: 0;
 }
 
+body.beats-workbench {
+  background:
+    radial-gradient(circle at 20% 14%, rgba(255, 108, 214, 0.22), transparent 28%),
+    radial-gradient(circle at 82% 12%, rgba(93, 234, 255, 0.18), transparent 26%),
+    linear-gradient(180deg, #160821 0%, #120a27 24%, #0d102d 56%, #060913 100%);
+}
+
+body.beats-workbench::before {
+  background:
+    linear-gradient(180deg, rgba(2, 4, 11, 0.05), rgba(2, 4, 11, 0.72)),
+    radial-gradient(circle at 50% 120%, rgba(0, 0, 0, 0), rgba(2, 4, 11, 0.86) 65%);
+}
+
+body.beats-workbench .site-bg {
+  background:
+    radial-gradient(circle at 70% 24%, rgba(255, 115, 230, 0.12), transparent 18%),
+    radial-gradient(circle at 18% 70%, rgba(70, 227, 255, 0.1), transparent 24%),
+    linear-gradient(180deg, rgba(21, 6, 30, 0.15), rgba(4, 8, 16, 0.5)),
+    url("/assets/tokyo-rain.svg") center center / cover no-repeat;
+  opacity: 0.78;
+  mix-blend-mode: screen;
+}
+
+body.beats-workbench .glitter {
+  background:
+    linear-gradient(102deg, transparent 0 8%, rgba(255, 255, 255, 0.09) 8.2%, transparent 8.6%),
+    linear-gradient(98deg, transparent 0 26%, rgba(173, 235, 255, 0.07) 26.15%, transparent 26.55%),
+    linear-gradient(101deg, transparent 0 48%, rgba(255, 145, 225, 0.08) 48.1%, transparent 48.45%),
+    linear-gradient(99deg, transparent 0 71%, rgba(255, 255, 255, 0.06) 71.1%, transparent 71.4%),
+    linear-gradient(100deg, transparent 0 88%, rgba(125, 234, 255, 0.07) 88.15%, transparent 88.5%);
+  opacity: 0.55;
+  animation: rain-sheen 10s linear infinite;
+}
+
 .wrap {
   position: relative;
   z-index: 1;
@@ -404,10 +438,141 @@ body::before {
   background: rgba(255, 94, 207, 0.1);
 }
 
+.in-progress-panel {
+  border-color: rgba(101, 223, 255, 0.42);
+  background:
+    linear-gradient(160deg, rgba(12, 11, 35, 0.8), rgba(12, 17, 36, 0.72)),
+    radial-gradient(circle at top right, rgba(255, 88, 188, 0.12), transparent 28%);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 50px rgba(102, 239, 255, 0.08);
+}
+
+.in-progress-player {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid rgba(102, 239, 255, 0.28);
+  border-radius: 24px;
+  background:
+    linear-gradient(145deg, rgba(16, 14, 38, 0.94), rgba(18, 18, 44, 0.86)),
+    radial-gradient(circle at top left, rgba(255, 94, 207, 0.12), transparent 30%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+.copy-status {
+  min-height: 24px;
+  margin: 10px 4px 0;
+  color: #a5f4ff;
+  font: 700 13px/1 "Orbitron", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.work-list {
+  margin-top: 8px;
+  display: grid;
+  gap: 12px;
+}
+
+.work-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(109, 221, 255, 0.22);
+  background:
+    linear-gradient(135deg, rgba(17, 15, 39, 0.92), rgba(15, 18, 42, 0.82)),
+    linear-gradient(90deg, rgba(255, 86, 188, 0.04), rgba(97, 231, 255, 0.05));
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.work-row:hover,
+.work-row.active {
+  transform: translateY(-1px);
+  border-color: rgba(255, 113, 209, 0.42);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.32),
+    0 0 24px rgba(255, 98, 196, 0.12);
+}
+
+.work-meta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.work-title {
+  margin: 0;
+  color: #f7f9ff;
+  font: 700 clamp(18px, 2vw, 24px)/1 "Orbitron", sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.work-date {
+  margin: 8px 0 0;
+  color: #9fdaf1;
+  font: 700 11px/1 "Orbitron", sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.work-play,
+.work-link {
+  appearance: none;
+  border: 1px solid rgba(112, 227, 255, 0.4);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 91, 197, 0.16), rgba(102, 239, 255, 0.14)),
+    rgba(10, 13, 27, 0.7);
+  color: #eef7ff;
+  cursor: pointer;
+  font: 700 11px/1 "Orbitron", sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 13px 16px;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.work-play:hover,
+.work-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 108, 214, 0.6);
+  box-shadow: 0 0 20px rgba(255, 108, 214, 0.12);
+}
+
+.work-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+body.beats-workbench audio {
+  width: 100%;
+  margin-top: 12px;
+  filter: hue-rotate(315deg) saturate(1.2) brightness(0.92);
+}
+
 @keyframes shimmer {
   0% { opacity: 0.58; }
   50% { opacity: 0.88; }
   100% { opacity: 0.58; }
+}
+
+@keyframes rain-sheen {
+  0% { transform: translateY(-2%); }
+  100% { transform: translateY(2%); }
 }
 
 @media (max-width: 780px) {
@@ -443,5 +608,17 @@ body::before {
     grid-column: 2;
     text-align: left;
     font-size: 9px;
+  }
+
+  .work-row {
+    grid-template-columns: 1fr;
+  }
+
+  .work-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .work-actions {
+    justify-content: flex-start;
   }
 }
