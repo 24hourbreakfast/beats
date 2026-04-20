@@ -1,0 +1,32 @@
+{
+  "defaults": {
+    "size": "1536x1024",
+    "quality": "high"
+  },
+  "prompts": [
+    {
+      "name": "ab-rain-01",
+      "prompt": "Tokyo nightlife aesthetic at midnight, wet pavement reflections, neon pink and cyan accents, pop-vaporwave mood, cinematic wide composition, no text, no logos, no people"
+    },
+    {
+      "name": "ab-rain-02",
+      "prompt": "Rainy city alley glowing with magenta and electric blue signage light, dreamy but crisp, subtle futuristic pop art influence, no text, no logos, no characters"
+    },
+    {
+      "name": "ab-rain-03",
+      "prompt": "Street-level night skyline with glossy reflections and luminous haze, purple and hot pink highlights, modern vapor-pop atmosphere, no words, no letters, no people"
+    },
+    {
+      "name": "ab-rain-04",
+      "prompt": "Minimal neon boulevard at night, reflective asphalt and soft rain streaks, rich color depth, stylish pop-vaporwave palette, no text, no logos, no humans"
+    },
+    {
+      "name": "ab-rain-05",
+      "prompt": "Futuristic downtown crosswalk in rain, saturated pink and cyan glows, smooth cinematic framing, clean negative space for UI, no text, no symbols, no people"
+    },
+    {
+      "name": "ab-rain-06",
+      "prompt": "Night city rooftop view with moody rain and bright reflections, purple and cherry neon lighting, upscale pop-vaporwave visual language, no words, no watermark, no humans"
+    }
+  ]
+}

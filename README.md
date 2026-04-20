@@ -59,3 +59,21 @@ Create a new Netlify account (GitHub login is fine), then:
 
 After deploy, add custom domain `bernban.com` in Netlify.
 You must have access to your DNS registrar to point the domain to Netlify.
+
+## AB Visual Batch Generation
+
+Generate a full AB art pack in one command:
+
+```bash
+export OPENAI_API_KEY="your_key_here"
+./tools/generate_ab_visuals.sh
+```
+
+Prompt config:
+
+- `ab/visual-prompts.json`
+
+Output:
+
+- PNGs in `assets/ab/`
+- Manifest in `assets/ab/manifest.json`
