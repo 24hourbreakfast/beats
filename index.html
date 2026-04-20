@@ -31,7 +31,8 @@
       "jobTitle": "Sync Music Producer",
       "sameAs": [
         "https://x.com/bernban",
-        "https://instagram.com/bernban"
+        "https://instagram.com/bernban",
+        "https://open.spotify.com/artist/3sFZR2lU0fC6u4ropTk8tq"
       ]
     }
   </script>
@@ -53,6 +54,7 @@
       <p class="hero-tagline"></p>
       <div class="hero-actions">
         <a href="mailto:bernban@bernban.com">Contact</a>
+        <a href="https://open.spotify.com/artist/3sFZR2lU0fC6u4ropTk8tq" rel="noopener noreferrer">Spotify</a>
         <details class="social-menu">
           <summary class="social-trigger">Social</summary>
           <div class="social-popover">
@@ -84,6 +86,11 @@
       const nowTitle = document.getElementById("now-title");
       const nowDate = document.getElementById("now-date");
       const nowArt = document.getElementById("now-art");
+      const spotifyTracks = {
+        "dream code": "https://open.spotify.com/track/4u7whJICjpPgO9bvU9XfmR?si=9b3a2cae36774f3b",
+        "sparkle life": "https://open.spotify.com/track/55wAI7518sWJCtlyqYkFCL?si=776bf10060204676",
+        "dripping wealth": "https://open.spotify.com/track/1DVlBfmDAlkw0B3HVvVpEE?si=a5eec0191e10446d"
+      };
 
       const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
         "&": "&amp;",
@@ -111,11 +118,20 @@
         return v;
       };
 
+      const spotifyUrlForTrack = (track) => {
+        const key = cleanTitle(track).toLowerCase();
+        return spotifyTracks[key] || "";
+      };
+
       const row = (track, idx) => {
         const safeTitle = escapeHtml(cleanTitle(track));
         const dateLabel = cleanDate(track.date_label);
         const safeDate = escapeHtml(dateLabel);
         const safeArtwork = escapeHtml(track.artwork || "/assets/art-dream-reveal.svg");
+        const spotifyUrl = spotifyUrlForTrack(track);
+        const spotifyMarkup = spotifyUrl
+          ? `<a class="track-spotify" href="${escapeHtml(spotifyUrl)}" target="_blank" rel="noopener noreferrer">Spotify</a>`
+          : '<span class="track-spotify track-spotify--empty" aria-hidden="true"></span>';
         return `
           <li>
             <button class="track-btn" type="button" data-idx="${idx}">
@@ -123,6 +139,7 @@
               <span class="track-name">${safeTitle}</span>
               <span class="track-date">${safeDate}</span>
             </button>
+            ${spotifyMarkup}
           </li>
         `;
       };
