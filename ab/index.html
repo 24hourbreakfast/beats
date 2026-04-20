@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AB</title>
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/ab-pop.css">
+</head>
+<body class="ab-page">
+  <main class="ab-shell">
+    <audio id="ab-player" controls preload="none"></audio>
+    <section id="ab-list" class="ab-list"></section>
+  </main>
+
+  <script>
+    (() => {
+      const player = document.getElementById("ab-player");
+      const list = document.getElementById("ab-list");
+      let tracks = [];
+      let current = -1;
+
+      const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      }[ch]));
+
+      const toUrl = (track) => "/ab/" + encodeURIComponent(track.file || "");
+
+      const playIcon = `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 5.2 19 12 8 18.8z"></path>
+        </svg>
+      `;
+
+      const downIcon = `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3v10.2l3.6-3.6 1.4 1.4-6 6-6-6 1.4-1.4 3.6 3.6V3zM4 19h16v2H4z"></path>
+        </svg>
+      `;
+
+      const linkIcon = `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M10.6 13.4a1 1 0 0 0 1.4 1.4l3.8-3.8a3 3 0 1 0-4.2-4.2L9.8 8.6a1 1 0 1 0 1.4 1.4l1.8-1.8a1 1 0 0 1 1.4 1.4zM13.4 10.6a1 1 0 0 0-1.4-1.4L8.2 13a3 3 0 1 0 4.2 4.2l1.8-1.8a1 1 0 1 0-1.4-1.4l-1.8 1.8a1 1 0 0 1-1.4-1.4z"></path>
+        </svg>
+      `;
+
+      const row = (track, idx) => {
+        const safeFile = escapeHtml(track.file || "untitled.mp3");
+        const safeUrl = escapeHtml(toUrl(track));
+        return `
+          <article class="ab-row" data-idx="${idx}">
+            <button class="ab-icon ab-play" type="button" data-idx="${idx}" aria-label="Play ${safeFile}" title="Play">
+              ${playIcon}
+            </button>
+            <button class="ab-file" type="button" data-idx="${idx}" title="${safeFile}">${safeFile}</button>
+            <a class="ab-icon" href="${safeUrl}" download aria-label="Download ${safeFile}" title="Download">
+              ${downIcon}
+            </a>
+            <button class="ab-icon ab-copy" type="button" data-url="${safeUrl}" aria-label="Copy link for ${safeFile}" title="Copy link">
+              ${linkIcon}
+            </button>
+          </article>
+        `;
+      };
+
+      const highlight = () => {
+        Array.from(list.querySelectorAll(".ab-row")).forEach((rowEl) => {
+          rowEl.classList.toggle("active", Number(rowEl.dataset.idx) === current);
+        });
+      };
+
+      const playTrack = (idx, autoplay) => {
+        if (idx < 0 || idx >= tracks.length) return;
+        current = idx;
+        player.src = toUrl(tracks[idx]);
+        highlight();
+        if (autoplay) {
+          player.play().catch(() => {});
+        }
+      };
+
+      const copyLink = async (url) => {
+        const absolute = new URL(url, window.location.origin).toString();
+        try {
+          await navigator.clipboard.writeText(absolute);
+        } catch (error) {
+          // Intentionally silent: page keeps visible text to filenames only.
+        }
+      };
+
+      fetch("tracks.json?t=" + Date.now(), { cache: "no-store" })
+        .then((res) => {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then((data) => {
+          tracks = Array.isArray(data.tracks) ? data.tracks.slice() : [];
+          tracks.sort((a, b) => {
+            const ta = Date.parse(a.timestamp || "") || 0;
+            const tb = Date.parse(b.timestamp || "") || 0;
+            return tb - ta;
+          });
+          if (!tracks.length) {
+            list.innerHTML = "";
+            return;
+          }
+          list.innerHTML = tracks.map((track, idx) => row(track, idx)).join("");
+          list.addEventListener("click", (event) => {
+            const playBtn = event.target.closest(".ab-play");
+            if (playBtn) {
+              playTrack(Number(playBtn.dataset.idx), true);
+              return;
+            }
+            const fileBtn = event.target.closest(".ab-file");
+            if (fileBtn) {
+              playTrack(Number(fileBtn.dataset.idx), true);
+              return;
+            }
+            const copyBtn = event.target.closest(".ab-copy");
+            if (copyBtn) {
+              copyLink(copyBtn.dataset.url);
+            }
+          });
+          playTrack(0, false);
+          player.addEventListener("ended", () => playTrack(current + 1, true));
+        })
+        .catch(() => {
+          list.innerHTML = "";
+        });
+    })();
+  </script>
+</body>
+</html>

@@ -3,3 +3,4 @@ Disallow: /beats/
 Sitemap: https://bernban.com/sitemap.xml
 Disallow: /investors/
 Disallow: /inprogress/
+Disallow: /ab/
