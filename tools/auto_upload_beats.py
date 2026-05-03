@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Watch a local folder and auto-upload new MP3s into this repo."""
+"""Watch a local folder and auto-upload new audio files into this repo."""
 
 from __future__ import annotations
 
@@ -95,7 +95,7 @@ def public_track_url(site_base_url: str, filename: str) -> str:
 def upload_file(
     source: Path,
     repo_root: Path,
-    beats_dir: Path,
+    upload_dir: Path,
     archive_dir: Path | None,
     discord_webhook_url: str | None,
     site_base_url: str,
@@ -103,8 +103,8 @@ def upload_file(
     wait_for_stable_file(source)
     sh(["git", "pull", "--rebase", "origin", "main"], cwd=repo_root)
 
-    dest_name = safe_dest_name(source, beats_dir)
-    dest_path = beats_dir / dest_name
+    dest_name = safe_dest_name(source, upload_dir)
+    dest_path = upload_dir / dest_name
     shutil.copy2(source, dest_path)
     print(f"[copy] {source} -> {dest_path}")
 
@@ -112,6 +112,10 @@ def upload_file(
         [
             sys.executable,
             str(repo_root / "tools" / "generate_tracks_manifest.py"),
+            "--beats-dir",
+            "inprogress",
+            "--output",
+            "beats/inprogress-tracks.json",
             "--sort-by",
             "mtime",
             "--date-source",
@@ -119,7 +123,7 @@ def upload_file(
         ],
         cwd=repo_root,
     )
-    sh(["git", "add", str(dest_path), "beats/tracks.json"], cwd=repo_root)
+    sh(["git", "add", str(dest_path), "beats/inprogress-tracks.json"], cwd=repo_root)
     sh(["git", "commit", "-m", f"Add beat: {dest_name}"], cwd=repo_root)
     sh(["git", "push", "origin", "main"], cwd=repo_root)
     print(f"[push] uploaded {dest_name}")
@@ -157,9 +161,9 @@ def main() -> int:
     args = parser.parse_args()
 
     repo_root = Path(__file__).resolve().parents[1]
-    beats_dir = repo_root / "beats"
-    if not beats_dir.exists():
-        raise SystemExit(f"Missing beats directory at {beats_dir}")
+    upload_dir = repo_root / "inprogress"
+    if not upload_dir.exists():
+        raise SystemExit(f"Missing upload directory at {upload_dir}")
 
     watch_dir = Path(args.watch_dir).expanduser().resolve()
     watch_dir.mkdir(parents=True, exist_ok=True)
@@ -170,7 +174,7 @@ def main() -> int:
     state = load_state(state_file)
 
     archive_dir = None if args.no_archive else (watch_dir / "_uploaded")
-    site_base_url = "https://bernban.com/beats"
+    site_base_url = "https://bernban.com/inprogress"
     discord_webhook_url = os.environ.get("DISCORD_WEBHOOK_URL")
     site_base_url = os.environ.get("BEATS_SITE_BASE_URL", site_base_url)
 
@@ -178,14 +182,19 @@ def main() -> int:
     print(f"[state] {state_file}")
 
     while True:
-        mp3_files = sorted([p for p in watch_dir.glob("*.mp3") if p.is_file()])
-        for path in mp3_files:
+        audio_files = sorted(
+            [
+                p for p in watch_dir.iterdir()
+                if p.is_file() and p.suffix.lower() in {".mp3", ".wav"}
+            ]
+        )
+        for path in audio_files:
             key = str(path.resolve())
             signature = file_signature(path)
             if state.get(key) == signature:
                 continue
             try:
-                upload_file(path, repo_root, beats_dir, archive_dir, discord_webhook_url, site_base_url)
+                upload_file(path, repo_root, upload_dir, archive_dir, discord_webhook_url, site_base_url)
                 state[key] = signature
                 save_state(state_file, state)
             except subprocess.CalledProcessError as exc:

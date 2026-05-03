@@ -37,7 +37,7 @@ cat > "$PLIST_PATH" <<EOF
   <key>EnvironmentVariables</key>
   <dict>
     <key>BEATS_SITE_BASE_URL</key>
-    <string>${BEATS_SITE_BASE_URL:-https://bernban.com/beats}</string>
+    <string>${BEATS_SITE_BASE_URL:-https://bernban.com/inprogress}</string>
     <key>DISCORD_WEBHOOK_URL</key>
     <string>${DISCORD_WEBHOOK_URL:-}</string>
   </dict>

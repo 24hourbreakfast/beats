@@ -55,6 +55,7 @@
       };
 
       const trackUrl = (track) => {
+        if (track.url) return track.url;
         return "/inprogress/" + encodeURIComponent(track.file || "");
       };
 
@@ -76,6 +77,7 @@
         const safeTitle = escapeHtml(displayTitle(track));
         const safeDate = escapeHtml(track.date_label || "");
         const safeUrl = escapeHtml(trackUrl(track));
+        const copyLabel = (track.file || "").toLowerCase().endsWith(".wav") ? "Copy WAV Link" : "Copy MP3 Link";
         return `
           <article class="work-row">
             <div class="work-meta">
@@ -87,7 +89,7 @@
             </div>
             <div class="work-actions">
               <a class="work-link" href="${safeUrl}" download>Download</a>
-              <button class="work-link work-copy" type="button" data-url="${safeUrl}">Copy MP3 Link</button>
+              <button class="work-link work-copy" type="button" data-url="${safeUrl}">${copyLabel}</button>
             </div>
           </article>
         `;

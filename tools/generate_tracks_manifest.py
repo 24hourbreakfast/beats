@@ -23,7 +23,8 @@ def parse_stamp(filename: str) -> datetime | None:
 
 
 def nice_title(filename: str) -> str:
-    stem = filename[:-4] if filename.lower().endswith(".mp3") else filename
+    path = Path(filename)
+    stem = path.stem if path.suffix.lower() in {".mp3", ".wav"} else filename
     match = STAMP_RE.match(stem)
     if match:
         stem = match.group("rest")
@@ -45,13 +46,16 @@ def sort_key_mtime(path: Path) -> tuple[float, str]:
 
 
 def build_manifest(tracks_dir: Path, sort_by: str, date_source: str) -> dict[str, object]:
-    mp3s = [p for p in tracks_dir.glob("*.mp3") if p.is_file()]
+    tracks_files = [
+        p for p in tracks_dir.iterdir()
+        if p.is_file() and p.suffix.lower() in {".mp3", ".wav"}
+    ]
     if sort_by == "mtime":
-        mp3s.sort(key=sort_key_mtime, reverse=True)
+        tracks_files.sort(key=sort_key_mtime, reverse=True)
     else:
-        mp3s.sort(key=sort_key_timestamp, reverse=True)
+        tracks_files.sort(key=sort_key_timestamp, reverse=True)
     tracks = []
-    for path in mp3s:
+    for path in tracks_files:
         stamp = parse_stamp(path.name)
         modified = datetime.fromtimestamp(path.stat().st_mtime)
         if date_source == "mtime":
