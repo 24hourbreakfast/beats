@@ -1,108 +1,93 @@
 {
-  "generated_at": "2026-05-03T15:46:10Z",
+  "generated_at": "2026-05-03T17:48:57Z",
   "tracks": [
     {
       "file": "too much love [instrumental] 050326.wav",
       "title": "too much love [instrumental] 050326",
-      "url": "/beats/too%20much%20love%20%5Binstrumental%5D%20050326.wav",
       "date_label": "May 3, 2026",
       "timestamp": "2026-05-03T08:54:00"
     },
     {
       "file": "too much love [instrumental] 050326.mp3",
       "title": "too much love [instrumental] 050326",
-      "url": "/beats/too%20much%20love%20%5Binstrumental%5D%20050326.mp3",
       "date_label": "May 3, 2026",
       "timestamp": "2026-05-03T08:54:00"
     },
     {
       "file": "find me at work 022226.mp3",
       "title": "find me at work 022226",
-      "url": "/inprogress/find%20me%20at%20work%20022226.mp3",
       "date_label": "Feb 22, 2026",
       "timestamp": "2026-02-22T20:39:41"
     },
     {
       "file": "bubble bath [instrumental] 122525.mp3",
       "title": "bubble bath [instrumental] 122525",
-      "url": "/inprogress/bubble%20bath%20%5Binstrumental%5D%20122525.mp3",
       "date_label": "Dec 25, 2025",
       "timestamp": "2025-12-25T18:50:38"
     },
     {
       "file": "burndomeson son 122025 [instrumental].mp3",
       "title": "burndomeson son 122025 [instrumental]",
-      "url": "/inprogress/burndomeson%20son%20122025%20%5Binstrumental%5D.mp3",
       "date_label": "Dec 20, 2025",
       "timestamp": "2025-12-20T15:16:42"
     },
     {
       "file": "burndomeson son 122025.mp3",
       "title": "burndomeson son 122025",
-      "url": "/inprogress/burndomeson%20son%20122025.mp3",
       "date_label": "Dec 20, 2025",
       "timestamp": "2025-12-20T15:09:01"
     },
     {
       "file": "tame talk 112325.mp3",
       "title": "tame talk 112325",
-      "url": "/inprogress/tame%20talk%20112325.mp3",
       "date_label": "Nov 23, 2025",
       "timestamp": "2025-11-23T10:55:18"
     },
     {
       "file": "time lover 112225.mp3",
       "title": "time lover 112225",
-      "url": "/inprogress/time%20lover%20112225.mp3",
       "date_label": "Nov 22, 2025",
       "timestamp": "2025-11-22T15:17:54"
     },
     {
       "file": "tame talk 092725.mp3",
       "title": "tame talk 092725",
-      "url": "/inprogress/tame%20talk%20092725.mp3",
       "date_label": "Sep 27, 2025",
       "timestamp": "2025-09-27T18:12:29"
     },
     {
       "file": "tame talk 092125.mp3",
       "title": "tame talk 092125",
-      "url": "/inprogress/tame%20talk%20092125.mp3",
       "date_label": "Sep 21, 2025",
       "timestamp": "2025-09-21T12:35:01"
     },
     {
       "file": "tame talk 090725.mp3",
       "title": "tame talk 090725",
-      "url": "/inprogress/tame%20talk%20090725.mp3",
       "date_label": "Sep 7, 2025",
       "timestamp": "2025-09-07T19:25:20"
     },
     {
       "file": "tame talk v2 hook fuckery 090325.mp3",
       "title": "tame talk v2 hook fuckery 090325",
-      "url": "/inprogress/tame%20talk%20v2%20hook%20fuckery%20090325.mp3",
       "date_label": "Sep 3, 2025",
       "timestamp": "2025-09-03T18:00:46"
     },
     {
       "file": "tame talk v1 082425.mp3",
       "title": "tame talk v1 082425",
-      "url": "/inprogress/tame%20talk%20v1%20082425.mp3",
       "date_label": "Aug 24, 2025",
       "timestamp": "2025-08-24T16:19:45"
     },
     {
       "file": "Bern Ban - You Up (instrumental) - 082325.mp3",
       "title": "Bern Ban You Up (instrumental) 082325",
-      "url": "/inprogress/Bern%20Ban%20-%20You%20Up%20(instrumental)%20-%20082325.mp3",
       "date_label": "Aug 23, 2025",
       "timestamp": "2025-08-23T15:35:04"
     },
     {
       "file": "SZA - Weekend (Bern Ban remix).mp3",
       "title": "SZA Weekend (Bern Ban remix)",
-      "url": "/inprogress/SZA%20-%20Weekend%20(Bern%20Ban%20remix).mp3",
       "date_label": "Jun 15, 2025",
       "timestamp": "2025-06-15T18:21:23"
     }
