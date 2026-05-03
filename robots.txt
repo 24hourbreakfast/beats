@@ -1,5 +1,7 @@
 User-agent: *
 Disallow: /beats/
+Disallow: /tom/
+Disallow: /adam/
 Sitemap: https://bernban.com/sitemap.xml
 Disallow: /investors/
 Disallow: /inprogress/

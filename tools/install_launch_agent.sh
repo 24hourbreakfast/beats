@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ICLOUD_DROP="$HOME/Library/Mobile Documents/com~apple~CloudDocs/MP3 LISTEN"
-DEFAULT_WATCH_DIR="$HOME/Music/BeatsDrop"
-if [[ -d "$ICLOUD_DROP" ]]; then
-  DEFAULT_WATCH_DIR="$ICLOUD_DROP"
-fi
-
-WATCH_DIR="${1:-$DEFAULT_WATCH_DIR}"
+DEFAULT_DROP_ROOT="$HOME/Library/Mobile Documents/com~apple~CloudDocs/MP3 LISTEN"
+DROP_ROOT="${1:-$DEFAULT_DROP_ROOT}"
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PYTHON_BIN="$(command -v python3)"
-PLIST_PATH="$HOME/Library/LaunchAgents/com.bernban.beats-uploader.plist"
+PLIST_PATH="$HOME/Library/LaunchAgents/com.bernban.share-uploader.plist"
 LOG_DIR="$REPO_ROOT/.uploader_state"
 mkdir -p "$LOG_DIR"
+mkdir -p "$DROP_ROOT/tom" "$DROP_ROOT/adam"
 
 cat > "$PLIST_PATH" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -20,13 +16,16 @@ cat > "$PLIST_PATH" <<EOF
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.bernban.beats-uploader</string>
+  <string>com.bernban.share-uploader</string>
   <key>ProgramArguments</key>
   <array>
     <string>$PYTHON_BIN</string>
     <string>$REPO_ROOT/tools/auto_upload_beats.py</string>
-    <string>--watch-dir</string>
-    <string>$WATCH_DIR</string>
+    <string>--drop-root</string>
+    <string>$DROP_ROOT</string>
+    <string>--people</string>
+    <string>tom</string>
+    <string>adam</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
@@ -36,10 +35,14 @@ cat > "$PLIST_PATH" <<EOF
   <string>$REPO_ROOT</string>
   <key>EnvironmentVariables</key>
   <dict>
-    <key>BEATS_SITE_BASE_URL</key>
-    <string>${BEATS_SITE_BASE_URL:-https://bernban.com/inprogress}</string>
+    <key>SHARE_SITE_ROOT</key>
+    <string>${SHARE_SITE_ROOT:-https://bernban.com}</string>
     <key>DISCORD_WEBHOOK_URL</key>
     <string>${DISCORD_WEBHOOK_URL:-}</string>
+    <key>DISCORD_WEBHOOK_URL_TOM</key>
+    <string>${DISCORD_WEBHOOK_URL_TOM:-}</string>
+    <key>DISCORD_WEBHOOK_URL_ADAM</key>
+    <string>${DISCORD_WEBHOOK_URL_ADAM:-}</string>
   </dict>
   <key>StandardOutPath</key>
   <string>$LOG_DIR/launchd.out.log</string>
@@ -49,10 +52,11 @@ cat > "$PLIST_PATH" <<EOF
 </plist>
 EOF
 
+launchctl unload "$HOME/Library/LaunchAgents/com.bernban.beats-uploader.plist" >/dev/null 2>&1 || true
 launchctl unload "$PLIST_PATH" >/dev/null 2>&1 || true
 launchctl load "$PLIST_PATH"
 
 echo "Installed and started: $PLIST_PATH"
-echo "Watching folder: $WATCH_DIR"
-echo "Drop .mp3 files there and they will auto-upload."
-echo "Set DISCORD_WEBHOOK_URL before installing if you want Discord alerts."
+echo "Drop Tom uploads here: $DROP_ROOT/tom"
+echo "Drop Adam uploads here: $DROP_ROOT/adam"
+echo "Set DISCORD_WEBHOOK_URL, DISCORD_WEBHOOK_URL_TOM, or DISCORD_WEBHOOK_URL_ADAM before installing if you want Discord alerts."

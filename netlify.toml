@@ -15,7 +15,24 @@
 
 [[redirects]]
   from = "/beats"
-  to = "/beats/"
+  to = "/tom/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/beats/"
+  to = "/tom/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tom"
+  to = "/tom/"
+  status = 301
+
+[[redirects]]
+  from = "/adam"
+  to = "/adam/"
   status = 301
 
 [[redirects]]
@@ -30,6 +47,26 @@
 
 [[headers]]
   for = "/beats"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+
+[[headers]]
+  for = "/tom/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+
+[[headers]]
+  for = "/tom"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+
+[[headers]]
+  for = "/adam/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+
+[[headers]]
+  for = "/adam"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
 
