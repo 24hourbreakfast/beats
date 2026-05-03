@@ -5,6 +5,7 @@ This repo powers `bernban.com/beats` and includes:
 - Vaporwave-styled beat page with a cleaner player
 - Newest tracks first (from `beats/tracks.json`)
 - Automatic local watch-folder uploads to GitHub
+- Optional Discord alerts when a new MP3 is live
 
 ## Site
 
@@ -18,20 +19,65 @@ This repo powers `bernban.com/beats` and includes:
 python3 tools/generate_tracks_manifest.py
 ```
 
+## Easiest MP3 Upload Flow
+
+Use the iCloud folder you already know:
+
+```text
+/Users/nathanbernier/Library/Mobile Documents/com~apple~CloudDocs/MP3 LISTEN
+```
+
+Drop an `.mp3` in that folder. The background uploader copies it into `beats/`,
+regenerates `beats/tracks.json`, commits, pushes to GitHub, and moves the source
+file into `_uploaded`.
+
+Tom does not need Git. Send him the site link, or add a Discord webhook so the
+link posts to a private Discord channel automatically.
+
+WAVs are better shared through iCloud/Drive/Dropbox links. GitHub allows some
+large audio files, but it warns above 50 MB and blocks files at 100 MB.
+
 ## Auto Upload Setup (macOS)
 
 1. Install the background uploader:
 
 ```bash
+./tools/install_launch_agent.sh
+```
+
+By default, the installer watches `MP3 LISTEN` in iCloud Drive when that folder
+exists. You can pass another folder path if you want:
+
+```bash
 ./tools/install_launch_agent.sh "/Users/nathanbernier/Music/BeatsDrop"
 ```
 
-2. Drop new `.mp3` files into that watch folder.
+2. Drop new `.mp3` files into the watch folder.
 3. The uploader will:
-- Copy file into `beats/` with a timestamp prefix
+- Copy file into `beats/`
 - Regenerate `beats/tracks.json`
 - Commit + push to `main`
 - Move source file into `<watch-folder>/_uploaded`
+
+### Discord Alerts
+
+Create a private Discord channel with Tom, then create a webhook for that
+channel. Install the uploader like this:
+
+```bash
+export DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/..."
+./tools/install_launch_agent.sh
+```
+
+When an MP3 uploads successfully, Discord receives the public beat link.
+
+### One-Time Upload
+
+To upload everything currently waiting in the watch folder once:
+
+```bash
+python3 tools/auto_upload_beats.py --watch-dir "/Users/nathanbernier/Library/Mobile Documents/com~apple~CloudDocs/MP3 LISTEN" --once
+```
 
 ### Logs
 

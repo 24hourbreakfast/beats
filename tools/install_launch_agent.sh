@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WATCH_DIR="${1:-$HOME/Music/BeatsDrop}"
+ICLOUD_DROP="$HOME/Library/Mobile Documents/com~apple~CloudDocs/MP3 LISTEN"
+DEFAULT_WATCH_DIR="$HOME/Music/BeatsDrop"
+if [[ -d "$ICLOUD_DROP" ]]; then
+  DEFAULT_WATCH_DIR="$ICLOUD_DROP"
+fi
+
+WATCH_DIR="${1:-$DEFAULT_WATCH_DIR}"
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PYTHON_BIN="$(command -v python3)"
 PLIST_PATH="$HOME/Library/LaunchAgents/com.bernban.beats-uploader.plist"
@@ -28,6 +34,13 @@ cat > "$PLIST_PATH" <<EOF
   <true/>
   <key>WorkingDirectory</key>
   <string>$REPO_ROOT</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>BEATS_SITE_BASE_URL</key>
+    <string>${BEATS_SITE_BASE_URL:-https://bernban.com/beats}</string>
+    <key>DISCORD_WEBHOOK_URL</key>
+    <string>${DISCORD_WEBHOOK_URL:-}</string>
+  </dict>
   <key>StandardOutPath</key>
   <string>$LOG_DIR/launchd.out.log</string>
   <key>StandardErrorPath</key>
@@ -42,3 +55,4 @@ launchctl load "$PLIST_PATH"
 echo "Installed and started: $PLIST_PATH"
 echo "Watching folder: $WATCH_DIR"
 echo "Drop .mp3 files there and they will auto-upload."
+echo "Set DISCORD_WEBHOOK_URL before installing if you want Discord alerts."
