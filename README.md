@@ -33,7 +33,7 @@ Install the background uploader:
 ```
 
 The installer creates the `tom` and `adam` drop folders if they do not already
-exist. The uploader accepts `.mp3` and `.wav` files.
+exist. The uploader accepts `.mp3` files only; `.wav` files are ignored.
 
 When you drop a file into `MP3 LISTEN/tom`, it:
 

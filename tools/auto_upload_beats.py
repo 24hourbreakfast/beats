@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Watch person-specific drop folders and publish audio to matching pages."""
+"""Watch person-specific drop folders and publish MP3s to matching pages."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from urllib.parse import quote
 from urllib.request import Request, urlopen
 
 
-SUPPORTED_SUFFIXES = {".mp3", ".wav"}
+SUPPORTED_SUFFIXES = {".mp3"}
 DEFAULT_PEOPLE = ("tom", "adam")
 
 
